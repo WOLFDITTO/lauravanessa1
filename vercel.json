@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/cms.js": {
+      "maxDuration": 30
+    }
+  }
+}

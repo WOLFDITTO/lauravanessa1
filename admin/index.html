@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Vanessa Legorreta</title>
+<style>
+:root{--ink:#0E0E0F;--gold:#C2A15C;--gold-g:linear-gradient(135deg,#D8BE86,#C2A15C,#9C7E3F);--line:rgba(194,161,92,.25);--soft:rgba(236,232,223,.55);--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0A0A0B;color:#ECE8DF;font-family:var(--sans);min-height:100vh;font-size:15px}
+a{color:inherit;text-decoration:none}
+
+/* ── LOGIN ── */
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center}
+.login-box{background:#15151A;border:1px solid var(--line);border-radius:10px;padding:48px;width:100%;max-width:400px}
+.login-box h1{font-size:1.6rem;color:var(--gold);margin-bottom:4px;font-weight:600}
+.login-box p{color:var(--soft);font-size:.9rem;margin-bottom:30px}
+.login-err{color:#e07070;font-size:.85rem;margin-top:10px;display:none}
+
+/* ── LAYOUT ── */
+#appScreen{display:none}
+#appScreen.on{display:flex;min-height:100vh}
+.sidebar{width:230px;flex:none;background:#0D0D0F;border-right:1px solid var(--line);display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0}
+.sb-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(194,161,92,.15)}
+.sb-logo b{display:block;color:var(--gold);font-size:1.1rem}
+.sb-logo small{color:var(--soft);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase}
+.sb-nav{padding:12px 0;flex:1}
+.sb-btn{display:flex;align-items:center;gap:10px;padding:11px 20px;color:rgba(236,232,223,.6);font-size:.88rem;cursor:pointer;border-left:2px solid transparent;transition:.2s;border:none;background:none;width:100%;text-align:left}
+.sb-btn:hover{color:#ECE8DF;background:rgba(194,161,92,.06)}
+.sb-btn.on{color:var(--gold);border-left:2px solid var(--gold);background:rgba(194,161,92,.09)}
+.sb-btn svg{width:16px;height:16px;flex:none;opacity:.7}
+.sb-footer{padding:16px 20px;border-top:1px solid rgba(194,161,92,.1);font-size:.8rem;color:var(--soft)}
+
+.main{margin-left:230px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+.panel{display:none;flex:1;padding:36px 40px 120px;max-width:860px}
+.panel.on{display:block}
+.panel h2{font-size:1.5rem;font-weight:600;color:#fff;margin-bottom:4px}
+.panel>.desc{color:var(--soft);font-size:.88rem;margin-bottom:28px}
+
+/* ── CARDS ── */
+.card{background:#15151A;border:1px solid var(--line);border-radius:8px;padding:26px;margin-bottom:18px}
+.card-title{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.card-title svg{width:14px;height:14px}
+
+/* ── FIELDS ── */
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:7px}
+.field input,.field textarea{width:100%;background:#0A0A0B;border:1px solid rgba(194,161,92,.2);border-radius:5px;color:#ECE8DF;font-family:var(--sans);font-size:.93rem;padding:11px 13px;transition:border-color .25s;line-height:1.5}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
+.field textarea{resize:vertical;min-height:80px}
+.field .hint{font-size:.75rem;color:rgba(236,232,223,.35);margin-top:5px}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border:none;border-radius:5px;cursor:pointer;font-family:var(--sans);font-size:.88rem;font-weight:500;letter-spacing:.04em;transition:all .25s;white-space:nowrap}
+.btn svg{width:15px;height:15px}
+.btn-gold{background:var(--gold-g);color:#1A140A}
+.btn-gold:hover{opacity:.88;transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--gold)}
+.btn-ghost:hover{border-color:var(--gold);background:rgba(194,161,92,.07)}
+.btn-danger{background:transparent;border:1px solid rgba(220,80,80,.3);color:#e07070}
+.btn-danger:hover{border-color:#e07070}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+.btn-full{width:100%;justify-content:center}
+
+/* ── IMAGES ── */
+.img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.img-slot label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:8px}
+.img-preview{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px;border:1px solid var(--line);background:#111;display:block}
+.img-slot .btn{margin-top:8px;width:100%;font-size:.8rem;padding:9px 12px}
+input[type=file]{display:none}
+.img-size-note{font-size:.75rem;color:rgba(236,232,223,.3);margin-top:16px}
+
+/* ── SAVE BAR ── */
+.save-bar{position:fixed;bottom:0;left:230px;right:0;background:#0D0D0F;border-top:1px solid var(--line);padding:14px 40px;display:flex;align-items:center;gap:16px;z-index:99}
+.save-bar .note{font-size:.8rem;color:rgba(236,232,223,.4)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:72px;right:24px;padding:13px 20px;border-radius:7px;font-size:.88rem;font-weight:500;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;z-index:999;max-width:340px}
+.toast.on{opacity:1;transform:none}
+.toast.ok{background:#1a3a2a;border:1px solid #2d7a50;color:#6fd490}
+.toast.err{background:#3a1a1a;border:1px solid #7a2d2d;color:#d46f6f}
+.toast.info{background:#1a2a3a;border:1px solid #2d507a;color:#6faad4}
+
+/* ── STATUS TAG ── */
+.status{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;padding:4px 10px;border-radius:20px;background:rgba(194,161,92,.1);color:var(--gold);border:1px solid var(--line);margin-bottom:20px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══════════════════════════════════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <h1>Admin Panel</h1>
+    <p>Vanessa Legorreta · Gestión de contenido</p>
+    <div class="field">
+      <label>Contraseña de acceso</label>
+      <input type="password" id="pw" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn btn-gold btn-full" id="loginBtn" onclick="doLogin()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Entrar
+    </button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- ═══ APP ══════════════════════════════════════════════════════════════════ -->
+<div id="appScreen">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sb-logo">
+      <b>VL · Admin</b>
+      <small>Panel de contenido</small>
+    </div>
+    <div class="sb-nav">
+      <button class="sb-btn on" onclick="show('textos',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke-linecap="round"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke-linecap="round"/></svg>
+        Textos del sitio
+      </button>
+      <button class="sb-btn" onclick="show('imagenes',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Imágenes
+      </button>
+      <button class="sb-btn" onclick="show('contacto',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15v1.92z" stroke-linecap="round"/></svg>
+        Contacto / WhatsApp
+      </button>
+    </div>
+    <div class="sb-footer">
+      <span id="sbStatus">Conectado</span>
+    </div>
+  </nav>
+
+  <div class="main">
+
+    <!-- ── TEXTOS ─────────────────────────────────── -->
+    <div class="panel on" id="p-textos">
+      <h2>Textos del sitio</h2>
+      <p class="desc">Edita los textos principales. Al guardar, el sitio se actualiza en 1–2 minutos automáticamente.</p>
+
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-linecap="round"/></svg>
+          Sección Hero (portada)
+        </div>
+        <div class="field">
+          <label>Frase en cursiva (debajo del nombre)</label>
+          <input type="text" id="f-heroTag">
+        </div>
+        <div class="field">
+          <label>Descripción corta</label>
+          <textarea id="f-heroSub" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke-linecap="round"/></svg>
+          Trayectoria y experiencia
+        </div>
+        <div class="field">
+          <label>Título de la sección</label>
+          <input type="text" id="f-aboutH2">
+        </div>
+        <div class="field">
+          <label>Párrafo 1 (presentación)</label>
+          <textarea id="f-aboutP1" rows="4"></textarea>
+        </div>
+        <div class="field">
+          <label>Párrafo 2 (especialización)</label>
+          <textarea id="f-aboutP2" rows="4"></textarea>
+        </div>
+        <div class="field">
+          <label>Párrafo 3 (forma de trabajo)</label>
+          <textarea id="f-aboutP3" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          Frase destacada (cita)
+        </div>
+        <div class="field">
+          <label>Texto de la cita</label>
+          <textarea id="f-quote" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg>
+          SEO (para buscadores)
+        </div>
+        <div class="field">
+          <label>Título de la página</label>
+          <input type="text" id="f-pageTitle">
+        </div>
+        <div class="field">
+          <label>Meta descripción</label>
+          <textarea id="f-metaDesc" rows="3"></textarea>
+          <p class="hint">Este texto aparece en Google bajo el título. Ideal: 140–160 caracteres.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── IMÁGENES ────────────────────────────────── -->
+    <div class="panel" id="p-imagenes">
+      <h2>Imágenes</h2>
+      <p class="desc">Sube nuevas fotos para reemplazar las actuales. Formatos: JPG, PNG, WebP. Máximo 3.5 MB por imagen.</p>
+
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Fotos de Vanessa
+        </div>
+        <div class="img-grid">
+          <div class="img-slot">
+            <label>Foto portada (Hero)</label>
+            <img class="img-preview" id="prev-hero" src="/vanessa-hero_upscaled.webp" alt="Hero">
+            <input type="file" id="file-hero" accept="image/*" onchange="previewImg(this,'prev-hero')">
+            <button class="btn btn-ghost" onclick="document.getElementById('file-hero').click()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Cambiar
+            </button>
+          </div>
+          <div class="img-slot">
+            <label>Foto Trayectoria</label>
+            <img class="img-preview" id="prev-sobre" src="/vanessa-sobre-mi_upscaled.webp" alt="Sobre mí">
+            <input type="file" id="file-sobre" accept="image/*" onchange="previewImg(this,'prev-sobre')">
+            <button class="btn btn-ghost" onclick="document.getElementById('file-sobre').click()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Cambiar
+            </button>
+          </div>
+          <div class="img-slot">
+            <label>Foto K303</label>
+            <img class="img-preview" id="prev-depie" src="/vanessa-de-pie_upscaled.webp" alt="K303">
+            <input type="file" id="file-depie" accept="image/*" onchange="previewImg(this,'prev-depie')">
+            <button class="btn btn-ghost" onclick="document.getElementById('file-depie').click()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Cambiar
+            </button>
+          </div>
+        </div>
+        <p class="img-size-note">Después de seleccionar la imagen, haz click en "Guardar imágenes" abajo.</p>
+        <div style="margin-top:18px">
+          <button class="btn btn-gold" id="saveImgBtn" onclick="saveImages()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke-linecap="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke-linecap="round"/></svg>
+            Guardar imágenes seleccionadas
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CONTACTO ───────────────────────────────── -->
+    <div class="panel" id="p-contacto">
+      <h2>Contacto y WhatsApp</h2>
+      <p class="desc">Cambia el número de WhatsApp y se actualizará en todos los botones del sitio automáticamente.</p>
+
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15v1.92z" stroke-linecap="round"/></svg>
+          Número de WhatsApp
+        </div>
+        <div class="field">
+          <label>Número (solo dígitos, con código de país)</label>
+          <input type="tel" id="f-phone" placeholder="5219983217478">
+          <p class="hint">Ejemplo: 5219983217478 → significa +52 998 321 7478. No pongas + ni espacios.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save bar (textos + contacto) -->
+    <div class="save-bar" id="saveBar">
+      <button class="btn btn-gold" id="saveBtn" onclick="saveTexts()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke-linecap="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke-linecap="round"/></svg>
+        Guardar cambios
+      </button>
+      <span class="note">El sitio se actualiza en ~2 minutos</span>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /appScreen -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+let pw = '', html = '', sha = '', orig = {};
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function toast(msg, type = 'ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast on ' + type;
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.className = 'toast', 4000);
+}
+
+function extract(h, before, after) {
+  const idx = h.indexOf(before);
+  if (idx < 0) return '';
+  const s = idx + before.length;
+  const e = h.indexOf(after, s);
+  return e < 0 ? '' : h.slice(s, e);
+}
+
+function replFirst(h, before, oldVal, after, newVal) {
+  const target = before + oldVal + after;
+  const idx = h.indexOf(target);
+  if (idx < 0) return h;
+  return h.slice(0, idx) + before + newVal + after + h.slice(idx + target.length);
+}
+
+function replPara(h, cls, oldTxt, newTxt) {
+  const old = '<p class="' + cls + '">' + oldTxt + '</p>';
+  const neu = '<p class="' + cls + '">' + newTxt + '</p>';
+  const idx = h.indexOf(old);
+  if (idx < 0) return h;
+  return h.slice(0, idx) + neu + h.slice(idx + old.length);
+}
+
+// ── UI ─────────────────────────────────────────────────────────────────────
+function show(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById('p-' + name).classList.add('on');
+  btn.classList.add('on');
+  document.getElementById('saveBar').style.display = name === 'imagenes' ? 'none' : 'flex';
+}
+
+function previewImg(input, prevId) {
+  if (!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => document.getElementById(prevId).src = e.target.result;
+  reader.readAsDataURL(input.files[0]);
+}
+
+// ── API ────────────────────────────────────────────────────────────────────
+async function api(body) {
+  const r = await fetch('/api/cms', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password: pw, ...body })
+  });
+  const data = await r.json();
+  if (!r.ok || !data.success) throw new Error(data.error || 'Error desconocido');
+  return data;
+}
+
+// ── Login ──────────────────────────────────────────────────────────────────
+async function doLogin() {
+  pw = document.getElementById('pw').value.trim();
+  if (!pw) return;
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('loginErr');
+  btn.disabled = true; btn.textContent = 'Conectando...';
+  err.style.display = 'none';
+  try {
+    const res = await api({ action: 'get' });
+    html = res.html; sha = res.sha;
+    populateForm();
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appScreen').classList.add('on');
+  } catch(e) {
+    err.textContent = e.message || 'Error de conexión';
+    err.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Entrar';
+  }
+}
+
+// ── Populate form ──────────────────────────────────────────────────────────
+function populateForm() {
+  const h = html;
+
+  // P1: "Soy Vanessa..."
+  const p1raw = extract(h, '<p class="reveal d2">Soy Vanessa', '</p>\n        <p class="reveal d2">Me');
+  // P2: "Me especializo..."
+  const p2raw = extract(h, '<p class="reveal d2">Me especializo', '</p>\n        <p class="reveal d3">');
+  // P3: "Mi forma..."
+  const p3raw = extract(h, '<p class="reveal d3">Mi forma', '</p>\n        <div class="sign');
+
+  orig = {
+    phone:     (h.match(/wa\.me\/(\d+)/) || [])[1] || '',
+    heroTag:   extract(h, '<p class="hero__tag">', '</p>'),
+    heroSub:   extract(h, '<p class="hero__sub">', '</p>'),
+    aboutH2:   extract(h, 'experiencia</span>\n        <h2 class="h2 reveal d1">', '</h2>'),
+    aboutP1:   'Soy Vanessa' + p1raw,
+    aboutP2:   'Me especializo' + p2raw,
+    aboutP3:   'Mi forma' + p3raw,
+    quote:     extract(h, '<blockquote class="quote reveal">\n      <p>', '</p>'),
+    metaDesc:  extract(h, '<meta name="description" content="', '">'),
+    pageTitle: extract(h, '<title>', '</title>'),
+  };
+
+  document.getElementById('f-phone').value    = orig.phone;
+  document.getElementById('f-heroTag').value  = orig.heroTag;
+  document.getElementById('f-heroSub').value  = orig.heroSub;
+  document.getElementById('f-aboutH2').value  = orig.aboutH2;
+  document.getElementById('f-aboutP1').value  = orig.aboutP1;
+  document.getElementById('f-aboutP2').value  = orig.aboutP2;
+  document.getElementById('f-aboutP3').value  = orig.aboutP3;
+  document.getElementById('f-quote').value    = orig.quote;
+  document.getElementById('f-metaDesc').value = orig.metaDesc;
+  document.getElementById('f-pageTitle').value= orig.pageTitle;
+}
+
+// ── Save texts ─────────────────────────────────────────────────────────────
+async function saveTexts() {
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+
+  try {
+    const n = {
+      phone:     document.getElementById('f-phone').value.trim(),
+      heroTag:   document.getElementById('f-heroTag').value.trim(),
+      heroSub:   document.getElementById('f-heroSub').value.trim(),
+      aboutH2:   document.getElementById('f-aboutH2').value.trim(),
+      aboutP1:   document.getElementById('f-aboutP1').value.trim(),
+      aboutP2:   document.getElementById('f-aboutP2').value.trim(),
+      aboutP3:   document.getElementById('f-aboutP3').value.trim(),
+      quote:     document.getElementById('f-quote').value.trim(),
+      metaDesc:  document.getElementById('f-metaDesc').value.trim(),
+      pageTitle: document.getElementById('f-pageTitle').value.trim(),
+    };
+
+    let h = html;
+
+    // Phone → replace ALL occurrences
+    if (n.phone && n.phone !== orig.phone)
+      h = h.split(orig.phone).join(n.phone);
+
+    // Simple before/after replacements
+    h = replFirst(h, '<p class="hero__tag">',    orig.heroTag,  '</p>', n.heroTag);
+    h = replFirst(h, '<p class="hero__sub">',    orig.heroSub,  '</p>', n.heroSub);
+    h = replFirst(h, 'experiencia</span>\n        <h2 class="h2 reveal d1">', orig.aboutH2, '</h2>', n.aboutH2);
+    h = replFirst(h, '<blockquote class="quote reveal">\n      <p>', orig.quote, '</p>', n.quote);
+    h = replFirst(h, '<meta name="description" content="', orig.metaDesc, '">', n.metaDesc);
+    h = replFirst(h, '<title>', orig.pageTitle, '</title>', n.pageTitle);
+
+    // Paragraphs (use full text as key)
+    h = replPara(h, 'reveal d2', orig.aboutP1, n.aboutP1);
+    h = replPara(h, 'reveal d2', orig.aboutP2, n.aboutP2);
+    h = replPara(h, 'reveal d3', orig.aboutP3, n.aboutP3);
+
+    await api({ action: 'save-html', sha, html: h });
+
+    // Refresh SHA for next save
+    const fresh = await api({ action: 'get' });
+    html = fresh.html; sha = fresh.sha;
+    orig = { ...n };
+
+    toast('✅ Guardado correctamente. El sitio se actualiza en ~2 minutos.');
+  } catch(e) {
+    toast('❌ ' + (e.message || 'Error al guardar'), 'err');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke-linecap="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke-linecap="round"/></svg> Guardar cambios';
+  }
+}
+
+// ── Save images ────────────────────────────────────────────────────────────
+async function saveImages() {
+  const slots = [
+    { fileId: 'file-hero',  filename: 'vanessa-hero_upscaled.webp' },
+    { fileId: 'file-sobre', filename: 'vanessa-sobre-mi_upscaled.webp' },
+    { fileId: 'file-depie', filename: 'vanessa-de-pie_upscaled.webp' },
+  ];
+  const toUpload = slots.filter(s => document.getElementById(s.fileId).files[0]);
+  if (!toUpload.length) { toast('Selecciona al menos una imagen', 'err'); return; }
+
+  const btn = document.getElementById('saveImgBtn');
+  btn.disabled = true; btn.textContent = 'Subiendo...';
+  let ok = 0, fail = 0;
+
+  for (const s of toUpload) {
+    const file = document.getElementById(s.fileId).files[0];
+    if (file.size > 3.6 * 1024 * 1024) {
+      toast(`❌ ${s.filename} supera los 3.5 MB`, 'err'); fail++; continue;
+    }
+    try {
+      const b64 = await toBase64(file);
+      await api({ action: 'save-image', filename: s.filename, imageData: b64 });
+      ok++;
+    } catch(e) {
+      toast('❌ ' + e.message, 'err'); fail++;
+    }
+  }
+
+  if (ok) toast(`✅ ${ok} imagen(es) guardada(s). Visible en ~2 minutos.`);
+  btn.disabled = false;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke-linecap="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke-linecap="round"/></svg> Guardar imágenes seleccionadas';
+}
+
+function toBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = e => res(e.target.result.split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+// Enter on login
+document.getElementById('pw').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+</script>
+</body>
+</html>
