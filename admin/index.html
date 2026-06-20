@@ -5,512 +5,604 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin · Vanessa Legorreta</title>
 <style>
-:root{--ink:#0E0E0F;--gold:#C2A15C;--gold-g:linear-gradient(135deg,#D8BE86,#C2A15C,#9C7E3F);--line:rgba(194,161,92,.25);--soft:rgba(236,232,223,.55);--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+:root{--gold:#C2A15C;--gold-g:linear-gradient(135deg,#D8BE86,#C2A15C,#9C7E3F);--line:rgba(194,161,92,.22);--soft:rgba(236,232,223,.55);--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0A0A0B;color:#ECE8DF;font-family:var(--sans);min-height:100vh;font-size:15px}
-a{color:inherit;text-decoration:none}
-
-/* ── LOGIN ── */
+body{background:#0A0A0B;color:#ECE8DF;font-family:var(--sans);min-height:100vh}
 #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center}
 .login-box{background:#15151A;border:1px solid var(--line);border-radius:10px;padding:48px;width:100%;max-width:400px}
-.login-box h1{font-size:1.6rem;color:var(--gold);margin-bottom:4px;font-weight:600}
-.login-box p{color:var(--soft);font-size:.9rem;margin-bottom:30px}
+.login-box h1{font-size:1.6rem;color:var(--gold);margin-bottom:4px}
+.login-box p{color:var(--soft);font-size:.9rem;margin-bottom:28px}
 .login-err{color:#e07070;font-size:.85rem;margin-top:10px;display:none}
-
-/* ── LAYOUT ── */
 #appScreen{display:none}
 #appScreen.on{display:flex;min-height:100vh}
-.sidebar{width:230px;flex:none;background:#0D0D0F;border-right:1px solid var(--line);display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0}
-.sb-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(194,161,92,.15)}
-.sb-logo b{display:block;color:var(--gold);font-size:1.1rem}
-.sb-logo small{color:var(--soft);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase}
-.sb-nav{padding:12px 0;flex:1}
-.sb-btn{display:flex;align-items:center;gap:10px;padding:11px 20px;color:rgba(236,232,223,.6);font-size:.88rem;cursor:pointer;border-left:2px solid transparent;transition:.2s;border:none;background:none;width:100%;text-align:left}
+.sidebar{width:220px;flex:none;background:#0D0D0F;border-right:1px solid var(--line);display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;overflow-y:auto}
+.sb-logo{padding:22px 18px 18px;border-bottom:1px solid rgba(194,161,92,.12)}
+.sb-logo b{display:block;color:var(--gold);font-size:1.05rem}
+.sb-logo small{color:var(--soft);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.sb-nav{padding:10px 0;flex:1}
+.sb-btn{display:flex;align-items:center;gap:9px;padding:10px 18px;color:rgba(236,232,223,.6);font-size:.85rem;cursor:pointer;border-left:2px solid transparent;transition:.2s;border:none;background:none;width:100%;text-align:left}
 .sb-btn:hover{color:#ECE8DF;background:rgba(194,161,92,.06)}
 .sb-btn.on{color:var(--gold);border-left:2px solid var(--gold);background:rgba(194,161,92,.09)}
-.sb-btn svg{width:16px;height:16px;flex:none;opacity:.7}
-.sb-footer{padding:16px 20px;border-top:1px solid rgba(194,161,92,.1);font-size:.8rem;color:var(--soft)}
-
-.main{margin-left:230px;flex:1;display:flex;flex-direction:column;min-height:100vh}
-.panel{display:none;flex:1;padding:36px 40px 120px;max-width:860px}
+.sb-footer{padding:14px 18px;border-top:1px solid rgba(194,161,92,.1);font-size:.75rem;color:var(--soft)}
+.main{margin-left:220px;flex:1;display:flex;flex-direction:column}
+.panel{display:none;flex:1;padding:32px 36px 110px;max-width:880px}
 .panel.on{display:block}
-.panel h2{font-size:1.5rem;font-weight:600;color:#fff;margin-bottom:4px}
-.panel>.desc{color:var(--soft);font-size:.88rem;margin-bottom:28px}
-
-/* ── CARDS ── */
-.card{background:#15151A;border:1px solid var(--line);border-radius:8px;padding:26px;margin-bottom:18px}
-.card-title{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:18px;display:flex;align-items:center;gap:8px}
-.card-title svg{width:14px;height:14px}
-
-/* ── FIELDS ── */
-.field{margin-bottom:16px}
+.panel>h2{font-size:1.45rem;font-weight:600;color:#fff;margin-bottom:4px}
+.panel>.desc{color:var(--soft);font-size:.87rem;margin-bottom:24px}
+.card{background:#15151A;border:1px solid var(--line);border-radius:8px;padding:22px;margin-bottom:16px}
+.card-title{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:16px}
+.field{margin-bottom:14px}
 .field:last-child{margin-bottom:0}
-.field label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:7px}
-.field input,.field textarea{width:100%;background:#0A0A0B;border:1px solid rgba(194,161,92,.2);border-radius:5px;color:#ECE8DF;font-family:var(--sans);font-size:.93rem;padding:11px 13px;transition:border-color .25s;line-height:1.5}
+.field label{display:block;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--soft);margin-bottom:6px}
+.field input,.field textarea{width:100%;background:#0A0A0B;border:1px solid rgba(194,161,92,.18);border-radius:5px;color:#ECE8DF;font-family:var(--sans);font-size:.9rem;padding:10px 12px;transition:border-color .25s;line-height:1.5}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
-.field textarea{resize:vertical;min-height:80px}
-.field .hint{font-size:.75rem;color:rgba(236,232,223,.35);margin-top:5px}
-
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border:none;border-radius:5px;cursor:pointer;font-family:var(--sans);font-size:.88rem;font-weight:500;letter-spacing:.04em;transition:all .25s;white-space:nowrap}
-.btn svg{width:15px;height:15px}
+.field textarea{resize:vertical;min-height:76px}
+.field .hint{font-size:.72rem;color:rgba(236,232,223,.32);margin-top:4px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border:none;border-radius:5px;cursor:pointer;font-family:var(--sans);font-size:.86rem;font-weight:500;letter-spacing:.04em;transition:all .22s;white-space:nowrap}
 .btn-gold{background:var(--gold-g);color:#1A140A}
-.btn-gold:hover{opacity:.88;transform:translateY(-1px)}
+.btn-gold:hover{opacity:.87;transform:translateY(-1px)}
 .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--gold)}
 .btn-ghost:hover{border-color:var(--gold);background:rgba(194,161,92,.07)}
-.btn-danger{background:transparent;border:1px solid rgba(220,80,80,.3);color:#e07070}
-.btn-danger:hover{border-color:#e07070}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
-.btn-full{width:100%;justify-content:center}
-
-/* ── IMAGES ── */
-.img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.img-slot label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:8px}
-.img-preview{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px;border:1px solid var(--line);background:#111;display:block}
-.img-slot .btn{margin-top:8px;width:100%;font-size:.8rem;padding:9px 12px}
+.img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.img-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.img-slot label{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:7px}
+.img-preview{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:5px;border:1px solid var(--line);background:#111;display:block}
+.img-preview.land{aspect-ratio:4/3}
+.img-slot .btn{margin-top:7px;width:100%;font-size:.77rem;padding:8px 10px}
 input[type=file]{display:none}
-.img-size-note{font-size:.75rem;color:rgba(236,232,223,.3);margin-top:16px}
-
-/* ── SAVE BAR ── */
-.save-bar{position:fixed;bottom:0;left:230px;right:0;background:#0D0D0F;border-top:1px solid var(--line);padding:14px 40px;display:flex;align-items:center;gap:16px;z-index:99}
-.save-bar .note{font-size:.8rem;color:rgba(236,232,223,.4)}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:72px;right:24px;padding:13px 20px;border-radius:7px;font-size:.88rem;font-weight:500;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;z-index:999;max-width:340px}
+.save-bar{position:fixed;bottom:0;left:220px;right:0;background:#0D0D0F;border-top:1px solid var(--line);padding:13px 36px;display:flex;align-items:center;gap:14px;z-index:99}
+.save-bar .note{font-size:.78rem;color:rgba(236,232,223,.38)}
+.toast{position:fixed;bottom:68px;right:22px;padding:12px 18px;border-radius:7px;font-size:.86rem;font-weight:500;opacity:0;transform:translateY(8px);transition:all .28s;pointer-events:none;z-index:999;max-width:320px}
 .toast.on{opacity:1;transform:none}
 .toast.ok{background:#1a3a2a;border:1px solid #2d7a50;color:#6fd490}
 .toast.err{background:#3a1a1a;border:1px solid #7a2d2d;color:#d46f6f}
-.toast.info{background:#1a2a3a;border:1px solid #2d507a;color:#6faad4}
-
-/* ── STATUS TAG ── */
-.status{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;padding:4px 10px;border-radius:20px;background:rgba(194,161,92,.1);color:var(--gold);border:1px solid var(--line);margin-bottom:20px}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 2s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.serv-lbl{font-size:.78rem;color:var(--gold);font-weight:600;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
 </style>
 </head>
 <body>
 
-<!-- ═══ LOGIN ═══════════════════════════════════════════════════════════════ -->
 <div id="loginScreen">
   <div class="login-box">
     <h1>Admin Panel</h1>
     <p>Vanessa Legorreta · Gestión de contenido</p>
-    <div class="field">
-      <label>Contraseña de acceso</label>
-      <input type="password" id="pw" placeholder="••••••••" autocomplete="current-password">
-    </div>
-    <button class="btn btn-gold btn-full" id="loginBtn" onclick="doLogin()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Entrar
-    </button>
+    <div class="field"><label>Contraseña</label><input type="password" id="pw" placeholder="••••••••"></div>
+    <button class="btn btn-gold" style="width:100%;justify-content:center" id="loginBtn" onclick="doLogin()">Entrar</button>
     <div class="login-err" id="loginErr"></div>
   </div>
 </div>
 
-<!-- ═══ APP ══════════════════════════════════════════════════════════════════ -->
 <div id="appScreen">
-
-  <!-- Sidebar -->
   <nav class="sidebar">
-    <div class="sb-logo">
-      <b>VL · Admin</b>
-      <small>Panel de contenido</small>
-    </div>
+    <div class="sb-logo"><b>VL · Admin</b><small>Panel CMS</small></div>
     <div class="sb-nav">
-      <button class="sb-btn on" onclick="show('textos',this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke-linecap="round"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke-linecap="round"/></svg>
-        Textos del sitio
-      </button>
-      <button class="sb-btn" onclick="show('imagenes',this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Imágenes
-      </button>
-      <button class="sb-btn" onclick="show('contacto',this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15v1.92z" stroke-linecap="round"/></svg>
-        Contacto / WhatsApp
-      </button>
+      <button class="sb-btn on"  onclick="show('hero',this)">🏠 Hero y Trayectoria</button>
+      <button class="sb-btn" onclick="show('servicios',this)">⚡ Servicios</button>
+      <button class="sb-btn" onclick="show('k303',this)">🏢 K303</button>
+      <button class="sb-btn" onclick="show('cumbre',this)">🏆 Cumbre y Contacto</button>
+      <button class="sb-btn" onclick="show('medios',this)">📰 Medios</button>
+      <button class="sb-btn" onclick="show('imagenes',this)">🖼 Imágenes</button>
+      <button class="sb-btn" onclick="show('redes',this)">📱 Redes y WhatsApp</button>
     </div>
-    <div class="sb-footer">
-      <span id="sbStatus">Conectado</span>
-    </div>
+    <div class="sb-footer">Panel conectado</div>
   </nav>
 
   <div class="main">
 
-    <!-- ── TEXTOS ─────────────────────────────────── -->
-    <div class="panel on" id="p-textos">
-      <h2>Textos del sitio</h2>
-      <p class="desc">Edita los textos principales. Al guardar, el sitio se actualiza en 1–2 minutos automáticamente.</p>
-
+    <!-- HERO Y TRAYECTORIA -->
+    <div class="panel on" id="p-hero">
+      <h2>Hero y Trayectoria</h2>
+      <p class="desc">Textos de la portada y la sección de experiencia.</p>
       <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-linecap="round"/></svg>
-          Sección Hero (portada)
-        </div>
-        <div class="field">
-          <label>Frase en cursiva (debajo del nombre)</label>
-          <input type="text" id="f-heroTag">
-        </div>
-        <div class="field">
-          <label>Descripción corta</label>
-          <textarea id="f-heroSub" rows="2"></textarea>
-        </div>
+        <div class="card-title">Sección Hero (portada)</div>
+        <div class="field"><label>Etiqueta superior (eyebrow)</label><input type="text" id="f-heroEyebrow"></div>
+        <div class="field"><label>Frase en cursiva</label><input type="text" id="f-heroTag"></div>
+        <div class="field"><label>Descripción corta</label><textarea id="f-heroSub" rows="2"></textarea></div>
       </div>
-
       <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke-linecap="round"/></svg>
-          Trayectoria y experiencia
-        </div>
-        <div class="field">
-          <label>Título de la sección</label>
-          <input type="text" id="f-aboutH2">
-        </div>
-        <div class="field">
-          <label>Párrafo 1 (presentación)</label>
-          <textarea id="f-aboutP1" rows="4"></textarea>
-        </div>
-        <div class="field">
-          <label>Párrafo 2 (especialización)</label>
-          <textarea id="f-aboutP2" rows="4"></textarea>
-        </div>
-        <div class="field">
-          <label>Párrafo 3 (forma de trabajo)</label>
-          <textarea id="f-aboutP3" rows="3"></textarea>
-        </div>
+        <div class="card-title">Trayectoria</div>
+        <div class="field"><label>Título de la sección</label><input type="text" id="f-aboutH2"></div>
+        <div class="field"><label>Párrafo 1</label><textarea id="f-aboutP1" rows="4"></textarea></div>
+        <div class="field"><label>Párrafo 2</label><textarea id="f-aboutP2" rows="4"></textarea></div>
+        <div class="field"><label>Párrafo 3</label><textarea id="f-aboutP3" rows="3"></textarea></div>
       </div>
-
       <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
-          Frase destacada (cita)
+        <div class="card-title">Estadísticas</div>
+        <div class="two-col">
+          <div class="field"><label>Número 1</label><input type="text" id="f-stat1num"></div>
+          <div class="field"><label>Etiqueta 1</label><input type="text" id="f-stat1lbl"></div>
         </div>
-        <div class="field">
-          <label>Texto de la cita</label>
-          <textarea id="f-quote" rows="3"></textarea>
+        <div class="two-col">
+          <div class="field"><label>Número 2</label><input type="text" id="f-stat2num"></div>
+          <div class="field"><label>Etiqueta 2</label><input type="text" id="f-stat2lbl"></div>
         </div>
+        <div class="two-col">
+          <div class="field"><label>Texto 3 (línea 1)</label><input type="text" id="f-stat3a"></div>
+          <div class="field"><label>Texto 3 (línea 2)</label><input type="text" id="f-stat3b"></div>
+        </div>
+        <div class="field"><label>Etiqueta 3</label><input type="text" id="f-stat3lbl"></div>
       </div>
-
       <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg>
-          SEO (para buscadores)
+        <div class="card-title">Frase destacada (cita)</div>
+        <div class="field"><label>Texto de la cita</label><textarea id="f-quote" rows="3"></textarea></div>
+        <div class="field"><label>Autor</label><input type="text" id="f-quoteAuthor"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">SEO</div>
+        <div class="field"><label>Título de la página</label><input type="text" id="f-pageTitle"></div>
+        <div class="field"><label>Meta descripción</label><textarea id="f-metaDesc" rows="2"></textarea></div>
+      </div>
+    </div>
+
+    <!-- SERVICIOS -->
+    <div class="panel" id="p-servicios">
+      <h2>Servicios</h2>
+      <p class="desc">Título y descripción de cada tarjeta de servicio.</p>
+      <div class="card">
+        <div class="card-title">Encabezado de la sección</div>
+        <div class="field"><label>Título</label><input type="text" id="f-servH2"></div>
+        <div class="field"><label>Descripción introductoria</label><textarea id="f-servLead" rows="2"></textarea></div>
+      </div>
+      <div class="card"><div class="serv-lbl">Servicio 01</div>
+        <div class="field"><label>Título</label><input type="text" id="f-s1t"></div>
+        <div class="field"><label>Descripción</label><textarea id="f-s1d" rows="2"></textarea></div>
+      </div>
+      <div class="card"><div class="serv-lbl">Servicio 02</div>
+        <div class="field"><label>Título</label><input type="text" id="f-s2t"></div>
+        <div class="field"><label>Descripción</label><textarea id="f-s2d" rows="2"></textarea></div>
+      </div>
+      <div class="card"><div class="serv-lbl">Servicio 03</div>
+        <div class="field"><label>Título</label><input type="text" id="f-s3t"></div>
+        <div class="field"><label>Descripción</label><textarea id="f-s3d" rows="2"></textarea></div>
+      </div>
+      <div class="card"><div class="serv-lbl">Servicio 04</div>
+        <div class="field"><label>Título</label><input type="text" id="f-s4t"></div>
+        <div class="field"><label>Descripción</label><textarea id="f-s4d" rows="2"></textarea></div>
+      </div>
+      <div class="card"><div class="serv-lbl">Servicio 05</div>
+        <div class="field"><label>Título</label><input type="text" id="f-s5t"></div>
+        <div class="field"><label>Descripción</label><textarea id="f-s5d" rows="2"></textarea></div>
+      </div>
+      <div class="card"><div class="serv-lbl">Servicio 06</div>
+        <div class="field"><label>Título</label><input type="text" id="f-s6t"></div>
+        <div class="field"><label>Descripción</label><textarea id="f-s6d" rows="2"></textarea></div>
+      </div>
+      <div class="card"><div class="serv-lbl">Servicio 07 (tarjeta ancha)</div>
+        <div class="field"><label>Título</label><input type="text" id="f-s7t"></div>
+        <div class="field"><label>Descripción</label><textarea id="f-s7d" rows="2"></textarea></div>
+      </div>
+    </div>
+
+    <!-- K303 -->
+    <div class="panel" id="p-k303">
+      <h2>Sección K303</h2>
+      <p class="desc">Textos del proyecto K303 · Business &amp; Industrial Hub.</p>
+      <div class="card">
+        <div class="card-title">Encabezado K303</div>
+        <div class="field"><label>Título</label><input type="text" id="f-k303title"></div>
+        <div class="field"><label>Párrafo principal</label><textarea id="f-k303lead" rows="3"></textarea></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Especificaciones (4 puntos)</div>
+        <div class="field"><label>Spec 1</label><textarea id="f-k303s1" rows="2"></textarea></div>
+        <div class="field"><label>Spec 2</label><textarea id="f-k303s2" rows="2"></textarea></div>
+        <div class="field"><label>Spec 3</label><textarea id="f-k303s3" rows="2"></textarea></div>
+        <div class="field"><label>Spec 4</label><textarea id="f-k303s4" rows="2"></textarea></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Conectividad (4 puntos)</div>
+        <div class="two-col">
+          <div class="field"><label>Dato 1 (ej: 2.5 km)</label><input type="text" id="f-k3c1b"></div>
+          <div class="field"><label>Descripción 1</label><input type="text" id="f-k3c1s"></div>
         </div>
-        <div class="field">
-          <label>Título de la página</label>
-          <input type="text" id="f-pageTitle">
+        <div class="two-col">
+          <div class="field"><label>Dato 2</label><input type="text" id="f-k3c2b"></div>
+          <div class="field"><label>Descripción 2</label><input type="text" id="f-k3c2s"></div>
         </div>
-        <div class="field">
-          <label>Meta descripción</label>
-          <textarea id="f-metaDesc" rows="3"></textarea>
-          <p class="hint">Este texto aparece en Google bajo el título. Ideal: 140–160 caracteres.</p>
+        <div class="two-col">
+          <div class="field"><label>Dato 3</label><input type="text" id="f-k3c3b"></div>
+          <div class="field"><label>Descripción 3</label><input type="text" id="f-k3c3s"></div>
+        </div>
+        <div class="two-col">
+          <div class="field"><label>Dato 4</label><input type="text" id="f-k3c4b"></div>
+          <div class="field"><label>Descripción 4</label><input type="text" id="f-k3c4s"></div>
         </div>
       </div>
     </div>
 
-    <!-- ── IMÁGENES ────────────────────────────────── -->
+    <!-- CUMBRE Y CONTACTO -->
+    <div class="panel" id="p-cumbre">
+      <h2>Cumbre y Contacto</h2>
+      <p class="desc">Textos de la sección Cumbre de Inversiones y la sección de Contacto.</p>
+      <div class="card">
+        <div class="card-title">Cumbre de Inversiones</div>
+        <div class="field"><label>Título</label><input type="text" id="f-cumbreH2"></div>
+        <div class="field"><label>Párrafo 1</label><textarea id="f-cumbreP1" rows="4"></textarea></div>
+        <div class="field"><label>Párrafo 2</label><textarea id="f-cumbreP2" rows="3"></textarea></div>
+        <div class="field"><label>Tarjeta · Título del rol</label><input type="text" id="f-cumbreCardName"></div>
+        <div class="field"><label>Tarjeta · Descripción</label><textarea id="f-cumbreCardP" rows="2"></textarea></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Sección de contacto</div>
+        <div class="field"><label>Título</label><input type="text" id="f-contactH2"></div>
+        <div class="field"><label>Descripción</label><textarea id="f-contactLead" rows="2"></textarea></div>
+      </div>
+    </div>
+
+    <!-- MEDIOS -->
+    <div class="panel" id="p-medios">
+      <h2>Medios y Publicaciones</h2>
+      <p class="desc">Edita los títulos, fechas y links de cada revista, y el video de YouTube.</p>
+      <div class="card">
+        <div class="card-title">Edición 1 (Junio 2026)</div>
+        <div class="field"><label>Etiqueta (ej: Edición · Junio 2026)</label><input type="text" id="f-ed1label"></div>
+        <div class="field"><label>Título de la edición</label><input type="text" id="f-ed1title"></div>
+        <div class="field"><label>Link de Issuu (URL completa)</label><input type="text" id="f-ed1link"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Edición 2 (Marzo 2026)</div>
+        <div class="field"><label>Etiqueta</label><input type="text" id="f-ed2label"></div>
+        <div class="field"><label>Título de la edición</label><input type="text" id="f-ed2title"></div>
+        <div class="field"><label>Link de Issuu (URL completa)</label><input type="text" id="f-ed2link"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Video YouTube</div>
+        <div class="field"><label>ID del video (lo que va después de watch?v=)</label><input type="text" id="f-ytId" placeholder="zWE7tophhnQ"><p class="hint">Ejemplo: youtube.com/watch?v=<b>zWE7tophhnQ</b> → escribe solo: zWE7tophhnQ</p></div>
+        <div class="field"><label>Título del video</label><input type="text" id="f-ytTitle"></div>
+        <div class="field"><label>Descripción del video</label><textarea id="f-ytDesc" rows="2"></textarea></div>
+      </div>
+    </div>
+
+    <!-- IMÁGENES -->
     <div class="panel" id="p-imagenes">
       <h2>Imágenes</h2>
-      <p class="desc">Sube nuevas fotos para reemplazar las actuales. Formatos: JPG, PNG, WebP. Máximo 3.5 MB por imagen.</p>
-
+      <p class="desc">Reemplaza las fotos. Formatos: JPG, PNG, WebP. Máx 3.5 MB por imagen.</p>
       <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Fotos de Vanessa
-        </div>
+        <div class="card-title">Fotos de Vanessa</div>
         <div class="img-grid">
-          <div class="img-slot">
-            <label>Foto portada (Hero)</label>
-            <img class="img-preview" id="prev-hero" src="/vanessa-hero_upscaled.webp" alt="Hero">
+          <div class="img-slot"><label>Hero (portada)</label>
+            <img class="img-preview" id="prev-hero" src="/vanessa-hero_upscaled.webp" alt="">
             <input type="file" id="file-hero" accept="image/*" onchange="previewImg(this,'prev-hero')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-hero').click()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Cambiar
-            </button>
+            <button class="btn btn-ghost" onclick="document.getElementById('file-hero').click()">↑ Cambiar</button>
           </div>
-          <div class="img-slot">
-            <label>Foto Trayectoria</label>
-            <img class="img-preview" id="prev-sobre" src="/vanessa-sobre-mi_upscaled.webp" alt="Sobre mí">
+          <div class="img-slot"><label>Trayectoria</label>
+            <img class="img-preview" id="prev-sobre" src="/vanessa-sobre-mi_upscaled.webp" alt="">
             <input type="file" id="file-sobre" accept="image/*" onchange="previewImg(this,'prev-sobre')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-sobre').click()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Cambiar
-            </button>
+            <button class="btn btn-ghost" onclick="document.getElementById('file-sobre').click()">↑ Cambiar</button>
           </div>
-          <div class="img-slot">
-            <label>Foto K303</label>
-            <img class="img-preview" id="prev-depie" src="/vanessa-de-pie_upscaled.webp" alt="K303">
+          <div class="img-slot"><label>K303</label>
+            <img class="img-preview" id="prev-depie" src="/vanessa-de-pie_upscaled.webp" alt="">
             <input type="file" id="file-depie" accept="image/*" onchange="previewImg(this,'prev-depie')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-depie').click()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Cambiar
-            </button>
+            <button class="btn btn-ghost" onclick="document.getElementById('file-depie').click()">↑ Cambiar</button>
           </div>
         </div>
-        <p class="img-size-note">Después de seleccionar la imagen, haz click en "Guardar imágenes" abajo.</p>
-        <div style="margin-top:18px">
-          <button class="btn btn-gold" id="saveImgBtn" onclick="saveImages()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke-linecap="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke-linecap="round"/></svg>
-            Guardar imágenes seleccionadas
-          </button>
-        </div>
       </div>
-    </div>
-
-    <!-- ── CONTACTO ───────────────────────────────── -->
-    <div class="panel" id="p-contacto">
-      <h2>Contacto y WhatsApp</h2>
-      <p class="desc">Cambia el número de WhatsApp y se actualizará en todos los botones del sitio automáticamente.</p>
-
       <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15v1.92z" stroke-linecap="round"/></svg>
-          Número de WhatsApp
+        <div class="card-title">Revistas · Edición Junio</div>
+        <div class="img-grid-4">
+          <div class="img-slot"><label>Portada</label>
+            <img class="img-preview land" id="prev-r0" src="/revista0_upscaled.webp" alt="">
+            <input type="file" id="file-r0" accept="image/*" onchange="previewImg(this,'prev-r0')">
+            <button class="btn btn-ghost" onclick="document.getElementById('file-r0').click()">↑ Cambiar</button>
+          </div>
+          <div class="img-slot"><label>Entrevista</label>
+            <img class="img-preview land" id="prev-r1" src="/Revista-1_upscaled.webp" alt="">
+            <input type="file" id="file-r1" accept="image/*" onchange="previewImg(this,'prev-r1')">
+            <button class="btn btn-ghost" onclick="document.getElementById('file-r1').click()">↑ Cambiar</button>
+          </div>
+          <div class="img-slot"><label>Quintana Roo</label>
+            <img class="img-preview land" id="prev-r3" src="/Revista-3_upscaled.webp" alt="">
+            <input type="file" id="file-r3" accept="image/*" onchange="previewImg(this,'prev-r3')">
+            <button class="btn btn-ghost" onclick="document.getElementById('file-r3').click()">↑ Cambiar</button>
+          </div>
+          <div class="img-slot"><label>La tierra</label>
+            <img class="img-preview land" id="prev-r2" src="/Revista-2_upscaled.webp" alt="">
+            <input type="file" id="file-r2" accept="image/*" onchange="previewImg(this,'prev-r2')">
+            <button class="btn btn-ghost" onclick="document.getElementById('file-r2').click()">↑ Cambiar</button>
+          </div>
         </div>
-        <div class="field">
-          <label>Número (solo dígitos, con código de país)</label>
-          <input type="tel" id="f-phone" placeholder="5219983217478">
-          <p class="hint">Ejemplo: 5219983217478 → significa +52 998 321 7478. No pongas + ni espacios.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Revistas · Edición Marzo</div>
+        <div class="img-grid">
+          <div class="img-slot"><label>Portada</label>
+            <img class="img-preview land" id="prev-rn0" src="/Revista-Nueva-0.webp" alt="">
+            <input type="file" id="file-rn0" accept="image/*" onchange="previewImg(this,'prev-rn0')">
+            <button class="btn btn-ghost" onclick="document.getElementById('file-rn0').click()">↑ Cambiar</button>
+          </div>
+          <div class="img-slot"><label>Epicentro</label>
+            <img class="img-preview land" id="prev-rn1" src="/Revista-Nueva-1.webp" alt="">
+            <input type="file" id="file-rn1" accept="image/*" onchange="previewImg(this,'prev-rn1')">
+            <button class="btn btn-ghost" onclick="document.getElementById('file-rn1').click()">↑ Cambiar</button>
+          </div>
+          <div class="img-slot"><label>Perfil</label>
+            <img class="img-preview land" id="prev-rn2" src="/Revista-Nueva-2.webp" alt="">
+            <input type="file" id="file-rn2" accept="image/*" onchange="previewImg(this,'prev-rn2')">
+            <button class="btn btn-ghost" onclick="document.getElementById('file-rn2').click()">↑ Cambiar</button>
+          </div>
         </div>
+      </div>
+      <div style="margin-top:16px">
+        <button class="btn btn-gold" id="saveImgBtn" onclick="saveImages()">💾 Guardar imágenes seleccionadas</button>
+        <span style="font-size:.78rem;color:rgba(236,232,223,.38);margin-left:14px">~2 minutos para publicar</span>
       </div>
     </div>
 
-    <!-- Save bar (textos + contacto) -->
+    <!-- REDES Y WHATSAPP -->
+    <div class="panel" id="p-redes">
+      <h2>Redes y WhatsApp</h2>
+      <p class="desc">El número y links se actualizan en todos los botones del sitio automáticamente.</p>
+      <div class="card">
+        <div class="card-title">WhatsApp</div>
+        <div class="field"><label>Número (solo dígitos con código de país)</label><input type="tel" id="f-phone" placeholder="5219983217478"><p class="hint">Ejemplo: 5219983217478 = +52 998 321 7478. Sin + ni espacios.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Redes sociales</div>
+        <div class="field"><label>Instagram (URL completa)</label><input type="text" id="f-ig"></div>
+        <div class="field"><label>Facebook (URL completa)</label><input type="text" id="f-fb"></div>
+        <div class="field"><label>LinkedIn (URL completa)</label><input type="text" id="f-li"></div>
+        <div class="field"><label>YouTube canal (URL completa)</label><input type="text" id="f-yt"></div>
+      </div>
+    </div>
+
     <div class="save-bar" id="saveBar">
-      <button class="btn btn-gold" id="saveBtn" onclick="saveTexts()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke-linecap="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke-linecap="round"/></svg>
-        Guardar cambios
-      </button>
+      <button class="btn btn-gold" id="saveBtn" onclick="saveTexts()">💾 Guardar cambios</button>
       <span class="note">El sitio se actualiza en ~2 minutos</span>
     </div>
-
-  </div><!-- /main -->
-</div><!-- /appScreen -->
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ── State ──────────────────────────────────────────────────────────────────
-let pw = '', html = '', sha = '', orig = {};
+let pw='',html='',sha='',orig={};
 
-// ── Helpers ────────────────────────────────────────────────────────────────
-function toast(msg, type = 'ok') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'toast on ' + type;
-  clearTimeout(el._t);
-  el._t = setTimeout(() => el.className = 'toast', 4000);
+function toast(msg,type='ok'){const el=document.getElementById('toast');el.textContent=msg;el.className='toast on '+type;clearTimeout(el._t);el._t=setTimeout(()=>el.className='toast',4500);}
+function get(id){const el=document.getElementById(id);return el?el.value.trim():'';}
+function set(id,val){const el=document.getElementById(id);if(el)el.value=val||'';}
+function extract(h,b,a){const i=h.indexOf(b);if(i<0)return'';const s=i+b.length,e=h.indexOf(a,s);return e<0?'':h.slice(s,e);}
+function replFirst(h,b,oldV,a,newV){if(!oldV)return h;const t=b+oldV+a,i=h.indexOf(t);if(i<0)return h;return h.slice(0,i)+b+newV+a+h.slice(i+t.length);}
+function replAll(h,o,n){if(!o||o===n)return h;return h.split(o).join(n);}
+function replPara(h,cls,o,n){if(!o||o===n)return h;const old='<p class="'+cls+'">'+o+'</p>',neu='<p class="'+cls+'">'+n+'</p>',i=h.indexOf(old);if(i<0)return h;return h.slice(0,i)+neu+h.slice(i+old.length);}
+function replUniq(h,tag,cls,o,n){if(!o||o===n)return h;const old='<'+tag+' class="'+cls+'">'+o+'</'+tag+'>',neu='<'+tag+' class="'+cls+'">'+n+'</'+tag+'>',i=h.indexOf(old);if(i<0)return h;return h.slice(0,i)+neu+h.slice(i+old.length);}
+
+function show(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.sb-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+name).classList.add('on');btn.classList.add('on');
+  document.getElementById('saveBar').style.display=name==='imagenes'?'none':'flex';
+}
+function previewImg(inp,pid){if(!inp.files[0])return;const r=new FileReader();r.onload=e=>document.getElementById(pid).src=e.target.result;r.readAsDataURL(inp.files[0]);}
+
+async function api(body){
+  const r=await fetch('/api/cms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw,...body})});
+  const d=await r.json();if(!r.ok||!d.success)throw new Error(d.error||'Error');return d;
 }
 
-function extract(h, before, after) {
-  const idx = h.indexOf(before);
-  if (idx < 0) return '';
-  const s = idx + before.length;
-  const e = h.indexOf(after, s);
-  return e < 0 ? '' : h.slice(s, e);
-}
-
-function replFirst(h, before, oldVal, after, newVal) {
-  const target = before + oldVal + after;
-  const idx = h.indexOf(target);
-  if (idx < 0) return h;
-  return h.slice(0, idx) + before + newVal + after + h.slice(idx + target.length);
-}
-
-function replPara(h, cls, oldTxt, newTxt) {
-  const old = '<p class="' + cls + '">' + oldTxt + '</p>';
-  const neu = '<p class="' + cls + '">' + newTxt + '</p>';
-  const idx = h.indexOf(old);
-  if (idx < 0) return h;
-  return h.slice(0, idx) + neu + h.slice(idx + old.length);
-}
-
-// ── UI ─────────────────────────────────────────────────────────────────────
-function show(name, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
-  document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('on'));
-  document.getElementById('p-' + name).classList.add('on');
-  btn.classList.add('on');
-  document.getElementById('saveBar').style.display = name === 'imagenes' ? 'none' : 'flex';
-}
-
-function previewImg(input, prevId) {
-  if (!input.files[0]) return;
-  const reader = new FileReader();
-  reader.onload = e => document.getElementById(prevId).src = e.target.result;
-  reader.readAsDataURL(input.files[0]);
-}
-
-// ── API ────────────────────────────────────────────────────────────────────
-async function api(body) {
-  const r = await fetch('/api/cms', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ password: pw, ...body })
-  });
-  const data = await r.json();
-  if (!r.ok || !data.success) throw new Error(data.error || 'Error desconocido');
-  return data;
-}
-
-// ── Login ──────────────────────────────────────────────────────────────────
-async function doLogin() {
-  pw = document.getElementById('pw').value.trim();
-  if (!pw) return;
-  const btn = document.getElementById('loginBtn');
-  const err = document.getElementById('loginErr');
-  btn.disabled = true; btn.textContent = 'Conectando...';
-  err.style.display = 'none';
-  try {
-    const res = await api({ action: 'get' });
-    html = res.html; sha = res.sha;
-    populateForm();
-    document.getElementById('loginScreen').style.display = 'none';
+async function doLogin(){
+  pw=document.getElementById('pw').value.trim();if(!pw)return;
+  const btn=document.getElementById('loginBtn'),err=document.getElementById('loginErr');
+  btn.disabled=true;btn.textContent='Conectando...';err.style.display='none';
+  try{const res=await api({action:'get'});html=res.html;sha=res.sha;populateForm();
+    document.getElementById('loginScreen').style.display='none';
     document.getElementById('appScreen').classList.add('on');
-  } catch(e) {
-    err.textContent = e.message || 'Error de conexión';
-    err.style.display = 'block';
-  } finally {
-    btn.disabled = false; btn.textContent = 'Entrar';
+  }catch(e){err.textContent=e.message;err.style.display='block';}
+  finally{btn.disabled=false;btn.textContent='Entrar';}
+}
+
+function populateForm(){
+  const h=html;
+  // Hero
+  set('f-heroEyebrow',extract(h,'<div class="hero__content">\n      <span class="eyebrow">','</span>'));
+  set('f-heroTag',    extract(h,'<p class="hero__tag">','</p>'));
+  set('f-heroSub',    extract(h,'<p class="hero__sub">','</p>'));
+  // About
+  set('f-aboutH2',extract(h,'Trayectoria y experiencia</span>\n        <h2 class="h2 reveal d1">','</h2>'));
+  set('f-aboutP1','Soy Vanessa'+extract(h,'<p class="reveal d2">Soy Vanessa','</p>\n        <p class="reveal d2">Me'));
+  set('f-aboutP2','Me especializo'+extract(h,'<p class="reveal d2">Me especializo','</p>\n        <p class="reveal d3">'));
+  set('f-aboutP3','Mi forma'+extract(h,'<p class="reveal d3">Mi forma','</p>\n        <div class="sign'));
+  // Stats — find by data-target values
+  const s1m=h.match(/data-target="(\d+)"[\s\S]{0,30}?<\/span>\n\s+<\/div>\n\s+<div class="stat__label">Años/);
+  set('f-stat1num',s1m?s1m[1]:'22');
+  set('f-stat1lbl',extract(h,'<div class="stat__label">Años de experiencia','</div>'));
+  const s2m=h.match(/data-target="(\d+)"[\s\S]{0,30}?<\/span>\n\s+<\/div>\n\s+<div class="stat__label">Destinos/);
+  set('f-stat2num',s2m?s2m[1]:'6');
+  set('f-stat2lbl',extract(h,'<div class="stat__label">Destinos de','</div>'));
+  set('f-stat3a',extract(h,'<div class="stat__txt">','<br>'));
+  set('f-stat3b',extract(h,'<div class="stat__txt">'+get('f-stat3a')+'<br>','</div>'));
+  set('f-stat3lbl',extract(h,'</div>\n            <div class="stat__label">'+extract(h,'<div class="stat__label">Asesoría','</div>').slice(0,1)||
+    extract(h,'<div class="stat__txt">','</div>\n            <div class="stat__label">').includes('Nacional')?
+    '<div class="stat__txt">Nacional<br>e Internacional</div>\n            <div class="stat__label">':'',
+    '</div>').replace(/^\s/,'')||extract(h,'orial\n          </div>','</div>').trim().split('\n').pop().trim());
+  // simpler stat3lbl
+  set('f-stat3lbl',extract(h,'<div class="stat__label">Asesoría a','</div>'));
+  // Quote
+  set('f-quote',      extract(h,'<blockquote class="quote reveal">\n      <p>','</p>'));
+  set('f-quoteAuthor',extract(h,'<cite>','</cite>'));
+  // SEO
+  set('f-pageTitle',extract(h,'<title>','</title>'));
+  set('f-metaDesc', extract(h,'<meta name="description" content="','">'));
+  // Servicios
+  set('f-servH2',  extract(h,'<h2 class="h2 reveal d1">Servicios','</h2>'));
+  set('f-servLead',extract(h,'<p class="lead reveal d2">Soluciones','</p>'));
+  for(let n=1;n<=6;n++){
+    const chunk=extract(h,'<span class="serv__num">0'+n+'</span>',n<6?'<span class="serv__num">0'+(n+1)+'</span>':'<div class="serv__card serv__card--wide');
+    set('f-s'+n+'t',extract(chunk,'<h3 class="serv__title">','</h3>'));
+    set('f-s'+n+'d',extract(chunk,'<p class="serv__desc">','</p>'));
   }
-}
-
-// ── Populate form ──────────────────────────────────────────────────────────
-function populateForm() {
-  const h = html;
-
-  // P1: "Soy Vanessa..."
-  const p1raw = extract(h, '<p class="reveal d2">Soy Vanessa', '</p>\n        <p class="reveal d2">Me');
-  // P2: "Me especializo..."
-  const p2raw = extract(h, '<p class="reveal d2">Me especializo', '</p>\n        <p class="reveal d3">');
-  // P3: "Mi forma..."
-  const p3raw = extract(h, '<p class="reveal d3">Mi forma', '</p>\n        <div class="sign');
-
-  orig = {
-    phone:     (h.match(/wa\.me\/(\d+)/) || [])[1] || '',
-    heroTag:   extract(h, '<p class="hero__tag">', '</p>'),
-    heroSub:   extract(h, '<p class="hero__sub">', '</p>'),
-    aboutH2:   extract(h, 'experiencia</span>\n        <h2 class="h2 reveal d1">', '</h2>'),
-    aboutP1:   'Soy Vanessa' + p1raw,
-    aboutP2:   'Me especializo' + p2raw,
-    aboutP3:   'Mi forma' + p3raw,
-    quote:     extract(h, '<blockquote class="quote reveal">\n      <p>', '</p>'),
-    metaDesc:  extract(h, '<meta name="description" content="', '">'),
-    pageTitle: extract(h, '<title>', '</title>'),
-  };
-
-  document.getElementById('f-phone').value    = orig.phone;
-  document.getElementById('f-heroTag').value  = orig.heroTag;
-  document.getElementById('f-heroSub').value  = orig.heroSub;
-  document.getElementById('f-aboutH2').value  = orig.aboutH2;
-  document.getElementById('f-aboutP1').value  = orig.aboutP1;
-  document.getElementById('f-aboutP2').value  = orig.aboutP2;
-  document.getElementById('f-aboutP3').value  = orig.aboutP3;
-  document.getElementById('f-quote').value    = orig.quote;
-  document.getElementById('f-metaDesc').value = orig.metaDesc;
-  document.getElementById('f-pageTitle').value= orig.pageTitle;
-}
-
-// ── Save texts ─────────────────────────────────────────────────────────────
-async function saveTexts() {
-  const btn = document.getElementById('saveBtn');
-  btn.disabled = true; btn.textContent = 'Guardando...';
-
-  try {
-    const n = {
-      phone:     document.getElementById('f-phone').value.trim(),
-      heroTag:   document.getElementById('f-heroTag').value.trim(),
-      heroSub:   document.getElementById('f-heroSub').value.trim(),
-      aboutH2:   document.getElementById('f-aboutH2').value.trim(),
-      aboutP1:   document.getElementById('f-aboutP1').value.trim(),
-      aboutP2:   document.getElementById('f-aboutP2').value.trim(),
-      aboutP3:   document.getElementById('f-aboutP3').value.trim(),
-      quote:     document.getElementById('f-quote').value.trim(),
-      metaDesc:  document.getElementById('f-metaDesc').value.trim(),
-      pageTitle: document.getElementById('f-pageTitle').value.trim(),
-    };
-
-    let h = html;
-
-    // Phone → replace ALL occurrences
-    if (n.phone && n.phone !== orig.phone)
-      h = h.split(orig.phone).join(n.phone);
-
-    // Simple before/after replacements
-    h = replFirst(h, '<p class="hero__tag">',    orig.heroTag,  '</p>', n.heroTag);
-    h = replFirst(h, '<p class="hero__sub">',    orig.heroSub,  '</p>', n.heroSub);
-    h = replFirst(h, 'experiencia</span>\n        <h2 class="h2 reveal d1">', orig.aboutH2, '</h2>', n.aboutH2);
-    h = replFirst(h, '<blockquote class="quote reveal">\n      <p>', orig.quote, '</p>', n.quote);
-    h = replFirst(h, '<meta name="description" content="', orig.metaDesc, '">', n.metaDesc);
-    h = replFirst(h, '<title>', orig.pageTitle, '</title>', n.pageTitle);
-
-    // Paragraphs (use full text as key)
-    h = replPara(h, 'reveal d2', orig.aboutP1, n.aboutP1);
-    h = replPara(h, 'reveal d2', orig.aboutP2, n.aboutP2);
-    h = replPara(h, 'reveal d3', orig.aboutP3, n.aboutP3);
-
-    await api({ action: 'save-html', sha, html: h });
-
-    // Refresh SHA for next save
-    const fresh = await api({ action: 'get' });
-    html = fresh.html; sha = fresh.sha;
-    orig = { ...n };
-
-    toast('✅ Guardado correctamente. El sitio se actualiza en ~2 minutos.');
-  } catch(e) {
-    toast('❌ ' + (e.message || 'Error al guardar'), 'err');
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke-linecap="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke-linecap="round"/></svg> Guardar cambios';
+  const wide=extract(h,'<div class="serv__card serv__card--wide reveal">','<a class="btn');
+  set('f-s7t',extract(wide,'<h3 class="serv__title">','</h3>'));
+  set('f-s7d',extract(wide,'<p class="serv__desc">','</p>'));
+  // K303
+  set('f-k303title',extract(h,'<h2 class="k303__title reveal d1">','</h2>'));
+  set('f-k303lead', extract(h,'<p class="k303__lead reveal d2">','</p>').replace(/<b>|<\/b>/g,''));
+  // specs
+  const specRaw=extract(h,'<ul class="k303__specs">','</ul>');
+  let si=0,sm,sre=/<span>([\s\S]*?)<\/span>/g;while((sm=sre.exec(specRaw))&&si<4){set('f-k303s'+(++si),sm[1].replace(/<b>|<\/b>/g,''));}
+  // connectivity
+  const connRaw=extract(h,'<div class="k303__connect-grid">','<div class="k303__amen">');
+  const bolds=[...connRaw.matchAll(/<b>([\s\S]*?)<\/b>/g)].map(m=>m[1]);
+  const cspans=[...connRaw.matchAll(/<span>([\s\S]*?)<\/span>/g)].map(m=>m[1]);
+  [0,1,2,3].forEach(i=>{set('f-k3c'+(i+1)+'b',bolds[i]||'');set('f-k3c'+(i+1)+'s',cspans[i]||'');});
+  // Cumbre
+  set('f-cumbreH2',      extract(h,'<h2 class="h2 reveal d1">Cumbre','</h2>'));
+  set('f-cumbreP1',      extract(h,'<p class="lead reveal d2">Como Directora','</p>\n        <p class="lead reveal d2" style'));
+  set('f-cumbreP2',      extract(h,'<p class="lead reveal d2" style="margin-top:18px">','</p>'));
+  set('f-cumbreCardName',extract(h,'<div class="name">','</div>'));
+  set('f-cumbreCardP',   extract(h,'<p>Un punto de encuentro','</p>'));
+  // Contacto
+  set('f-contactH2',  extract(h,'<h2 class="h2 reveal d1">Hablemos','</h2>'));
+  set('f-contactLead',extract(h,'<p class="lead reveal d2" style="margin-bottom:34px">','</p>'));
+  // Medios
+  const ed1=extract(h,'<div class="medios__edition">','<div class="medios__edition">\n      <span class="eyebrow reveal">Las');
+  set('f-ed1label',extract(ed1,'<span class="eyebrow reveal">','</span>'));
+  set('f-ed1title',extract(ed1,'<h3 class="medios__ed-title reveal d1">','</h3>'));
+  set('f-ed1link', (h.match(/issuu\.com[^"]*junio[^"]*/)||[])[0]||'');
+  const idx2=h.indexOf('<div class="medios__edition">\n      <span class="eyebrow reveal">Las');
+  if(idx2>=0){const ed2=h.slice(idx2);
+    set('f-ed2label',extract(ed2,'<span class="eyebrow reveal">','</span>'));
+    set('f-ed2title',extract(ed2,'<h3 class="medios__ed-title reveal d1">','</h3>'));
   }
+  set('f-ed2link',(h.match(/issuu\.com[^"]*marzo[^"]*/)||[])[0]||'');
+  const ytm=h.match(/embed\/([\w-]+)"/);
+  set('f-ytId',ytm?ytm[1]:'');
+  set('f-ytTitle',extract(h,'<h3>','</h3>\n        <p>'));
+  set('f-ytDesc', extract(h,'</h3>\n        <p>','</p>\n        <a class="btn btn--ghost"'));
+  // Redes
+  set('f-phone',(h.match(/wa\.me\/(\d+)/)||[])[1]||'');
+  set('f-ig',(h.match(/href="(https:\/\/www\.instagram\.com\/[^"]+)"/)||[])[1]||'');
+  set('f-fb',(h.match(/href="(https:\/\/www\.facebook\.com\/[^"]+)"/)||[])[1]||'');
+  set('f-li',(h.match(/href="(https:\/\/www\.linkedin\.com\/in\/[^"]+)"/)||[])[1]||'');
+  set('f-yt',(h.match(/href="(https:\/\/youtube\.com\/@[^"]+)"/)||[])[1]||'');
+  // Snapshot originals
+  orig={};document.querySelectorAll('[id^="f-"]').forEach(el=>{orig[el.id]=el.value;});
 }
 
-// ── Save images ────────────────────────────────────────────────────────────
-async function saveImages() {
-  const slots = [
-    { fileId: 'file-hero',  filename: 'vanessa-hero_upscaled.webp' },
-    { fileId: 'file-sobre', filename: 'vanessa-sobre-mi_upscaled.webp' },
-    { fileId: 'file-depie', filename: 'vanessa-de-pie_upscaled.webp' },
+async function saveTexts(){
+  const btn=document.getElementById('saveBtn');btn.disabled=true;btn.textContent='Guardando...';
+  try{
+    let h=html;
+    const g=id=>get(id),o=id=>orig[id]||'';
+    // Hero
+    h=replFirst(h,'<div class="hero__content">\n      <span class="eyebrow">',o('f-heroEyebrow'),'</span>',g('f-heroEyebrow'));
+    h=replFirst(h,'<p class="hero__tag">',o('f-heroTag'),'</p>',g('f-heroTag'));
+    h=replFirst(h,'<p class="hero__sub">',o('f-heroSub'),'</p>',g('f-heroSub'));
+    // About
+    h=replFirst(h,'Trayectoria y experiencia</span>\n        <h2 class="h2 reveal d1">',o('f-aboutH2'),'</h2>',g('f-aboutH2'));
+    h=replPara(h,'reveal d2',o('f-aboutP1'),g('f-aboutP1'));
+    h=replPara(h,'reveal d2',o('f-aboutP2'),g('f-aboutP2'));
+    h=replPara(h,'reveal d3',o('f-aboutP3'),g('f-aboutP3'));
+    // Stats
+    if(g('f-stat1num')!==o('f-stat1num'))h=h.replace('data-target="'+o('f-stat1num')+'"','data-target="'+g('f-stat1num')+'"');
+    h=replFirst(h,'<div class="stat__label">Años de experiencia',o('f-stat1lbl'),'</div>',g('f-stat1lbl'));
+    if(g('f-stat2num')!==o('f-stat2num'))h=h.replace('data-target="'+o('f-stat2num')+'"','data-target="'+g('f-stat2num')+'"');
+    h=replFirst(h,'<div class="stat__label">Destinos de',o('f-stat2lbl'),'</div>',g('f-stat2lbl'));
+    h=replFirst(h,'<div class="stat__txt">',o('f-stat3a')+'<br>'+o('f-stat3b'),'</div>',g('f-stat3a')+'<br>'+g('f-stat3b'));
+    h=replFirst(h,'<div class="stat__label">Asesoría a',o('f-stat3lbl'),'</div>',g('f-stat3lbl'));
+    // Quote
+    h=replFirst(h,'<blockquote class="quote reveal">\n      <p>',o('f-quote'),'</p>',g('f-quote'));
+    h=replFirst(h,'<cite>',o('f-quoteAuthor'),'</cite>',g('f-quoteAuthor'));
+    // SEO
+    h=replFirst(h,'<title>',o('f-pageTitle'),'</title>',g('f-pageTitle'));
+    h=replFirst(h,'<meta name="description" content="',o('f-metaDesc'),'">',g('f-metaDesc'));
+    // Servicios
+    h=replFirst(h,'<h2 class="h2 reveal d1">Servicios',o('f-servH2'),'</h2>',g('f-servH2'));
+    h=replFirst(h,'<p class="lead reveal d2">Soluciones',o('f-servLead'),'</p>',g('f-servLead'));
+    for(let n=1;n<=7;n++){
+      h=replUniq(h,'h3','serv__title',o('f-s'+n+'t'),g('f-s'+n+'t'));
+      h=replUniq(h,'p','serv__desc',o('f-s'+n+'d'),g('f-s'+n+'d'));
+    }
+    // K303
+    h=replFirst(h,'<h2 class="k303__title reveal d1">',o('f-k303title'),'</h2>',g('f-k303title'));
+    // k303 lead: replace stripping <b> formatting
+    const k3lFull=extract(html,'<p class="k303__lead reveal d2">','</p>');
+    h=replFirst(h,'<p class="k303__lead reveal d2">',k3lFull,'</p>',g('f-k303lead'));
+    // K303 specs
+    for(let i=1;i<=4;i++){if(o('f-k303s'+i)&&g('f-k303s'+i)!==o('f-k303s'+i))h=replAll(h,'<span>'+o('f-k303s'+i)+'</span>','<span>'+g('f-k303s'+i)+'</span>');}
+    // K303 connectivity
+    for(let i=1;i<=4;i++){
+      if(o('f-k3c'+i+'b')&&g('f-k3c'+i+'b')!==o('f-k3c'+i+'b'))h=replAll(h,'<b>'+o('f-k3c'+i+'b')+'</b>','<b>'+g('f-k3c'+i+'b')+'</b>');
+      if(o('f-k3c'+i+'s')&&g('f-k3c'+i+'s')!==o('f-k3c'+i+'s'))h=replAll(h,'<span>'+o('f-k3c'+i+'s')+'</span>','<span>'+g('f-k3c'+i+'s')+'</span>');
+    }
+    // Cumbre
+    h=replFirst(h,'<h2 class="h2 reveal d1">Cumbre',o('f-cumbreH2'),'</h2>',g('f-cumbreH2'));
+    h=replFirst(h,'<p class="lead reveal d2">Como Directora',o('f-cumbreP1'),'</p>',g('f-cumbreP1'));
+    h=replFirst(h,'<p class="lead reveal d2" style="margin-top:18px">',o('f-cumbreP2'),'</p>',g('f-cumbreP2'));
+    h=replFirst(h,'<div class="name">',o('f-cumbreCardName'),'</div>',g('f-cumbreCardName'));
+    h=replFirst(h,'<p>Un punto de encuentro',o('f-cumbreCardP'),'</p>',g('f-cumbreCardP'));
+    // Contacto
+    h=replFirst(h,'<h2 class="h2 reveal d1">Hablemos',o('f-contactH2'),'</h2>',g('f-contactH2'));
+    h=replFirst(h,'<p class="lead reveal d2" style="margin-bottom:34px">',o('f-contactLead'),'</p>',g('f-contactLead'));
+    // Medios ed1
+    h=replFirst(h,'<span class="eyebrow reveal">'+o('f-ed1label'),o('f-ed1label').slice(0,-3)||'</span>',
+      '' /* won't work cleanly */);
+    // Ed1 label: find first eyebrow in medios section
+    {const ms=h.indexOf('<section class="section section--dark" id="medios">');
+     if(ms>=0){const sub=h.slice(ms);const nb=replFirst(sub,'<span class="eyebrow reveal">',o('f-ed1label'),'</span>',g('f-ed1label'));h=h.slice(0,ms)+nb;}
+    }
+    h=replFirst(h,'<h3 class="medios__ed-title reveal d1">'+o('f-ed1title'),'</h3>',
+      '' /* partial */);
+    h=replUniq(h,'h3','medios__ed-title reveal d1',o('f-ed1title'),g('f-ed1title'));
+    if(o('f-ed1link')&&g('f-ed1link')!==o('f-ed1link'))h=replAll(h,o('f-ed1link'),g('f-ed1link'));
+    // Ed2 label: second eyebrow reveal in medios
+    {const ms=h.indexOf('<section class="section section--dark" id="medios">');
+     if(ms>=0){let sub=h.slice(ms);const fi=sub.indexOf('<span class="eyebrow reveal">');
+      if(fi>=0){const si=sub.indexOf('<span class="eyebrow reveal">',fi+1);
+       if(si>=0){const before=sub.slice(0,si);const after_si=sub.slice(si);
+        const newafter=replFirst(after_si,'<span class="eyebrow reveal">',o('f-ed2label'),'</span>',g('f-ed2label'));
+        sub=before+newafter;h=h.slice(0,ms)+sub;}}}}
+    h=replUniq(h,'h3','medios__ed-title reveal d1',o('f-ed2title'),g('f-ed2title'));
+    if(o('f-ed2link')&&g('f-ed2link')!==o('f-ed2link'))h=replAll(h,o('f-ed2link'),g('f-ed2link'));
+    // YouTube
+    if(g('f-ytId')&&g('f-ytId')!==o('f-ytId')){h=replAll(h,'embed/'+o('f-ytId'),'embed/'+g('f-ytId'));h=replAll(h,'watch?v='+o('f-ytId'),'watch?v='+g('f-ytId'));}
+    h=replFirst(h,'<h3>',o('f-ytTitle'),'</h3>',g('f-ytTitle'));
+    h=replFirst(h,'</h3>\n        <p>',o('f-ytDesc'),'</p>',g('f-ytDesc'));
+    // Phone + Socials
+    if(g('f-phone')&&g('f-phone')!==o('f-phone'))h=replAll(h,o('f-phone'),g('f-phone'));
+    if(g('f-ig')&&g('f-ig')!==o('f-ig'))h=replAll(h,o('f-ig'),g('f-ig'));
+    if(g('f-fb')&&g('f-fb')!==o('f-fb'))h=replAll(h,o('f-fb'),g('f-fb'));
+    if(g('f-li')&&g('f-li')!==o('f-li'))h=replAll(h,o('f-li'),g('f-li'));
+    if(g('f-yt')&&g('f-yt')!==o('f-yt'))h=replAll(h,o('f-yt'),g('f-yt'));
+
+    await api({action:'save-html',sha,html:h});
+    const fresh=await api({action:'get'});html=fresh.html;sha=fresh.sha;
+    orig={};document.querySelectorAll('[id^="f-"]').forEach(el=>{orig[el.id]=el.value;});
+    toast('✅ Guardado. El sitio se actualiza en ~2 minutos.');
+  }catch(e){toast('❌ '+(e.message||'Error al guardar'),'err');}
+  finally{btn.disabled=false;btn.textContent='💾 Guardar cambios';}
+}
+
+async function saveImages(){
+  const slots=[
+    {fileId:'file-hero', filename:'vanessa-hero_upscaled.webp'},
+    {fileId:'file-sobre',filename:'vanessa-sobre-mi_upscaled.webp'},
+    {fileId:'file-depie',filename:'vanessa-de-pie_upscaled.webp'},
+    {fileId:'file-r0',   filename:'revista0_upscaled.webp'},
+    {fileId:'file-r1',   filename:'Revista-1_upscaled.webp'},
+    {fileId:'file-r2',   filename:'Revista-2_upscaled.webp'},
+    {fileId:'file-r3',   filename:'Revista-3_upscaled.webp'},
+    {fileId:'file-rn0',  filename:'Revista-Nueva-0.webp'},
+    {fileId:'file-rn1',  filename:'Revista-Nueva-1.webp'},
+    {fileId:'file-rn2',  filename:'Revista-Nueva-2.webp'},
   ];
-  const toUpload = slots.filter(s => document.getElementById(s.fileId).files[0]);
-  if (!toUpload.length) { toast('Selecciona al menos una imagen', 'err'); return; }
-
-  const btn = document.getElementById('saveImgBtn');
-  btn.disabled = true; btn.textContent = 'Subiendo...';
-  let ok = 0, fail = 0;
-
-  for (const s of toUpload) {
-    const file = document.getElementById(s.fileId).files[0];
-    if (file.size > 3.6 * 1024 * 1024) {
-      toast(`❌ ${s.filename} supera los 3.5 MB`, 'err'); fail++; continue;
-    }
-    try {
-      const b64 = await toBase64(file);
-      await api({ action: 'save-image', filename: s.filename, imageData: b64 });
-      ok++;
-    } catch(e) {
-      toast('❌ ' + e.message, 'err'); fail++;
-    }
+  const toUpload=slots.filter(s=>document.getElementById(s.fileId).files[0]);
+  if(!toUpload.length){toast('Selecciona al menos una imagen','err');return;}
+  const btn=document.getElementById('saveImgBtn');btn.disabled=true;btn.textContent='Subiendo...';
+  let ok=0;
+  for(const s of toUpload){
+    const file=document.getElementById(s.fileId).files[0];
+    if(file.size>3.6*1024*1024){toast('❌ '+s.filename+' supera 3.5 MB','err');continue;}
+    try{const b64=await toB64(file);await api({action:'save-image',filename:s.filename,imageData:b64});ok++;}
+    catch(e){toast('❌ '+e.message,'err');}
   }
-
-  if (ok) toast(`✅ ${ok} imagen(es) guardada(s). Visible en ~2 minutos.`);
-  btn.disabled = false;
-  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke-linecap="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke-linecap="round"/></svg> Guardar imágenes seleccionadas';
+  if(ok)toast('✅ '+ok+' imagen(es) guardada(s). Visible en ~2 min.');
+  btn.disabled=false;btn.textContent='💾 Guardar imágenes seleccionadas';
 }
 
-function toBase64(file) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = e => res(e.target.result.split(',')[1]);
-    r.onerror = rej;
-    r.readAsDataURL(file);
-  });
-}
+function toB64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>res(e.target.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(file);});}
 
-// Enter on login
-document.getElementById('pw').addEventListener('keydown', e => {
-  if (e.key === 'Enter') doLogin();
-});
+document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 </script>
 </body>
 </html>

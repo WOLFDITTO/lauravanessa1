@@ -74,7 +74,14 @@ module.exports = async (req, res) => {
     const allowed = [
       'vanessa-hero_upscaled.webp',
       'vanessa-sobre-mi_upscaled.webp',
-      'vanessa-de-pie_upscaled.webp'
+      'vanessa-de-pie_upscaled.webp',
+      'revista0_upscaled.webp',
+      'Revista-1_upscaled.webp',
+      'Revista-2_upscaled.webp',
+      'Revista-3_upscaled.webp',
+      'Revista-Nueva-0.webp',
+      'Revista-Nueva-1.webp',
+      'Revista-Nueva-2.webp',
     ];
     if (!allowed.includes(filename)) return res.status(400).json({ error: 'Archivo no permitido' });
 
