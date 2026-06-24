@@ -8,71 +8,113 @@
 :root{--gold:#C2A15C;--gold-g:linear-gradient(135deg,#D8BE86,#C2A15C,#9C7E3F);--line:rgba(194,161,92,.22);--soft:rgba(236,232,223,.55);--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0A0A0B;color:#ECE8DF;font-family:var(--sans);min-height:100vh}
+
+/* LOGIN */
 #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center}
 .login-box{background:#15151A;border:1px solid var(--line);border-radius:10px;padding:48px;width:100%;max-width:400px}
 .login-box h1{font-size:1.6rem;color:var(--gold);margin-bottom:4px}
 .login-box p{color:var(--soft);font-size:.9rem;margin-bottom:28px}
 .login-err{color:#e07070;font-size:.85rem;margin-top:10px;display:none}
+
+/* APP LAYOUT */
 #appScreen{display:none}
 #appScreen.on{display:flex;min-height:100vh}
-.sidebar{width:220px;flex:none;background:#0D0D0F;border-right:1px solid var(--line);display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;overflow-y:auto}
-.sb-logo{padding:22px 18px 18px;border-bottom:1px solid rgba(194,161,92,.12)}
-.sb-logo b{display:block;color:var(--gold);font-size:1.05rem}
-.sb-logo small{color:var(--soft);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
-.sb-nav{padding:10px 0;flex:1}
-.sb-btn{display:flex;align-items:center;gap:9px;padding:10px 18px;color:rgba(236,232,223,.6);font-size:.85rem;cursor:pointer;border-left:2px solid transparent;transition:.2s;border:none;background:none;width:100%;text-align:left}
+.sidebar{width:210px;flex:none;background:#0D0D0F;border-right:1px solid var(--line);display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;overflow-y:auto;z-index:50}
+.sb-logo{padding:18px 16px 14px;border-bottom:1px solid rgba(194,161,92,.12)}
+.sb-logo b{display:block;color:var(--gold);font-size:1rem}
+.sb-logo small{color:var(--soft);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}
+.sb-nav{padding:8px 0;flex:1}
+.sb-btn{display:flex;align-items:center;gap:8px;padding:9px 16px;color:rgba(236,232,223,.6);font-size:.82rem;cursor:pointer;border-left:2px solid transparent;transition:.18s;border:none;background:none;width:100%;text-align:left}
 .sb-btn:hover{color:#ECE8DF;background:rgba(194,161,92,.06)}
 .sb-btn.on{color:var(--gold);border-left:2px solid var(--gold);background:rgba(194,161,92,.09)}
-.sb-footer{padding:14px 18px;border-top:1px solid rgba(194,161,92,.1);font-size:.75rem;color:var(--soft)}
-.main{margin-left:220px;flex:1;display:flex;flex-direction:column}
-.panel{display:none;flex:1;padding:32px 36px 110px;max-width:880px}
+.sb-footer{padding:12px 16px;border-top:1px solid rgba(194,161,92,.1);font-size:.72rem;color:var(--soft)}
+
+/* MAIN */
+.main{margin-left:210px;flex:1;display:flex;flex-direction:row;min-height:100vh}
+.form-col{flex:none;width:460px;border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:100vh}
+.preview-col{flex:1;position:relative;background:#111}
+.preview-col iframe{width:100%;height:100%;border:none;position:sticky;top:0}
+.preview-col .prev-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;color:rgba(236,232,223,.25);font-size:.85rem;gap:10px}
+.preview-col .prev-placeholder svg{width:36px;height:36px;opacity:.3}
+
+/* No preview mode */
+.main.no-preview .form-col{width:100%;border-right:none}
+.main.no-preview .preview-col{display:none}
+
+/* PANELS */
+.panel{display:none;flex:1;padding:28px 28px 100px;overflow-y:auto}
 .panel.on{display:block}
-.panel>h2{font-size:1.45rem;font-weight:600;color:#fff;margin-bottom:4px}
-.panel>.desc{color:var(--soft);font-size:.87rem;margin-bottom:24px}
-.card{background:#15151A;border:1px solid var(--line);border-radius:8px;padding:22px;margin-bottom:16px}
-.card-title{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:16px}
-.field{margin-bottom:14px}
+.panel>h2{font-size:1.35rem;font-weight:600;color:#fff;margin-bottom:3px}
+.panel>.desc{color:var(--soft);font-size:.84rem;margin-bottom:20px}
+
+/* CARDS */
+.card{background:#15151A;border:1px solid var(--line);border-radius:7px;padding:18px;margin-bottom:14px}
+.card-title{font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px}
+
+/* FIELDS */
+.field{margin-bottom:12px}
 .field:last-child{margin-bottom:0}
-.field label{display:block;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--soft);margin-bottom:6px}
-.field input,.field textarea{width:100%;background:#0A0A0B;border:1px solid rgba(194,161,92,.18);border-radius:5px;color:#ECE8DF;font-family:var(--sans);font-size:.9rem;padding:10px 12px;transition:border-color .25s;line-height:1.5}
-.field input:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
-.field textarea{resize:vertical;min-height:76px}
-.field .hint{font-size:.72rem;color:rgba(236,232,223,.32);margin-top:4px}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border:none;border-radius:5px;cursor:pointer;font-family:var(--sans);font-size:.86rem;font-weight:500;letter-spacing:.04em;transition:all .22s;white-space:nowrap}
+.field label{display:block;font-size:.67rem;letter-spacing:.13em;text-transform:uppercase;color:var(--soft);margin-bottom:5px}
+.field input,.field textarea,.field select{width:100%;background:#0A0A0B;border:1px solid rgba(194,161,92,.18);border-radius:4px;color:#ECE8DF;font-family:var(--sans);font-size:.86rem;padding:9px 11px;transition:border-color .2s;line-height:1.5}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--gold)}
+.field textarea{resize:vertical;min-height:68px}
+.field .hint{font-size:.7rem;color:rgba(236,232,223,.3);margin-top:3px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+/* COLOR PICKER FIELD */
+.color-field{display:flex;align-items:center;gap:10px;background:#0A0A0B;border:1px solid rgba(194,161,92,.18);border-radius:4px;padding:6px 11px;cursor:pointer;transition:border-color .2s}
+.color-field:focus-within{border-color:var(--gold)}
+.color-field input[type=color]{width:28px;height:28px;border:none;background:none;padding:0;cursor:pointer;border-radius:3px}
+.color-field span{font-size:.86rem;color:#ECE8DF;flex:1}
+.color-field code{font-size:.75rem;color:var(--soft);font-family:monospace}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border:none;border-radius:4px;cursor:pointer;font-family:var(--sans);font-size:.83rem;font-weight:500;letter-spacing:.04em;transition:all .2s;white-space:nowrap}
 .btn-gold{background:var(--gold-g);color:#1A140A}
 .btn-gold:hover{opacity:.87;transform:translateY(-1px)}
 .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--gold)}
 .btn-ghost:hover{border-color:var(--gold);background:rgba(194,161,92,.07)}
-.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
-.img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.img-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.img-slot label{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:7px}
-.img-preview{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:5px;border:1px solid var(--line);background:#111;display:block}
+.btn-sm{padding:6px 13px;font-size:.76rem}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+
+/* IMAGES */
+.img-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.img-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.img-slot label{display:block;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:6px}
+.img-preview{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px;border:1px solid var(--line);background:#111;display:block}
 .img-preview.land{aspect-ratio:4/3}
-.img-slot .btn{margin-top:7px;width:100%;font-size:.77rem;padding:8px 10px}
+.img-slot .btn{margin-top:6px;width:100%;font-size:.74rem;padding:7px 8px}
 input[type=file]{display:none}
-.save-bar{position:fixed;bottom:0;left:220px;right:0;background:#0D0D0F;border-top:1px solid var(--line);padding:13px 36px;display:flex;align-items:center;gap:14px;z-index:99}
-.save-bar .note{font-size:.78rem;color:rgba(236,232,223,.38)}
-.toast{position:fixed;bottom:68px;right:22px;padding:12px 18px;border-radius:7px;font-size:.86rem;font-weight:500;opacity:0;transform:translateY(8px);transition:all .28s;pointer-events:none;z-index:999;max-width:320px}
+
+/* SAVE BAR */
+.save-bar{position:fixed;bottom:0;left:210px;right:0;background:#0D0D0F;border-top:1px solid var(--line);padding:11px 24px;display:flex;align-items:center;gap:12px;z-index:99}
+.save-bar .note{font-size:.75rem;color:rgba(236,232,223,.35);flex:1}
+#previewToggle.active{background:var(--gold-g);color:#1A140A;border-color:transparent}
+
+/* TOAST */
+.toast{position:fixed;bottom:60px;right:18px;padding:11px 16px;border-radius:6px;font-size:.83rem;font-weight:500;opacity:0;transform:translateY(6px);transition:all .25s;pointer-events:none;z-index:999;max-width:300px}
 .toast.on{opacity:1;transform:none}
 .toast.ok{background:#1a3a2a;border:1px solid #2d7a50;color:#6fd490}
 .toast.err{background:#3a1a1a;border:1px solid #7a2d2d;color:#d46f6f}
-.serv-lbl{font-size:.78rem;color:var(--gold);font-weight:600;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+
+.serv-lbl{font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
 </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
     <h1>Admin Panel</h1>
     <p>Vanessa Legorreta · Gestión de contenido</p>
     <div class="field"><label>Contraseña</label><input type="password" id="pw" placeholder="••••••••"></div>
-    <button class="btn btn-gold" style="width:100%;justify-content:center" id="loginBtn" onclick="doLogin()">Entrar</button>
+    <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:4px" id="loginBtn" onclick="doLogin()">Entrar</button>
     <div class="login-err" id="loginErr"></div>
   </div>
 </div>
 
+<!-- APP -->
 <div id="appScreen">
   <nav class="sidebar">
     <div class="sb-logo"><b>VL · Admin</b><small>Panel CMS</small></div>
@@ -81,275 +123,394 @@ input[type=file]{display:none}
       <button class="sb-btn" onclick="show('servicios',this)">⚡ Servicios</button>
       <button class="sb-btn" onclick="show('k303',this)">🏢 K303</button>
       <button class="sb-btn" onclick="show('cumbre',this)">🏆 Cumbre y Contacto</button>
+      <button class="sb-btn" onclick="show('radio',this)">📻 Programa de Radio</button>
       <button class="sb-btn" onclick="show('medios',this)">📰 Medios</button>
       <button class="sb-btn" onclick="show('imagenes',this)">🖼 Imágenes</button>
       <button class="sb-btn" onclick="show('redes',this)">📱 Redes y WhatsApp</button>
+      <button class="sb-btn" onclick="show('diseno',this)">🎨 Paleta de colores</button>
     </div>
-    <div class="sb-footer">Panel conectado</div>
+    <div class="sb-footer" id="sbStatus">Panel conectado</div>
   </nav>
 
-  <div class="main">
+  <div class="main no-preview" id="mainArea">
+    <div class="form-col">
 
-    <!-- HERO Y TRAYECTORIA -->
-    <div class="panel on" id="p-hero">
-      <h2>Hero y Trayectoria</h2>
-      <p class="desc">Textos de la portada y la sección de experiencia.</p>
-      <div class="card">
-        <div class="card-title">Sección Hero (portada)</div>
-        <div class="field"><label>Etiqueta superior (eyebrow)</label><input type="text" id="f-heroEyebrow"></div>
-        <div class="field"><label>Frase en cursiva</label><input type="text" id="f-heroTag"></div>
-        <div class="field"><label>Descripción corta</label><textarea id="f-heroSub" rows="2"></textarea></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Trayectoria</div>
-        <div class="field"><label>Título de la sección</label><input type="text" id="f-aboutH2"></div>
-        <div class="field"><label>Párrafo 1</label><textarea id="f-aboutP1" rows="4"></textarea></div>
-        <div class="field"><label>Párrafo 2</label><textarea id="f-aboutP2" rows="4"></textarea></div>
-        <div class="field"><label>Párrafo 3</label><textarea id="f-aboutP3" rows="3"></textarea></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Estadísticas</div>
-        <div class="two-col">
-          <div class="field"><label>Número 1</label><input type="text" id="f-stat1num"></div>
-          <div class="field"><label>Etiqueta 1</label><input type="text" id="f-stat1lbl"></div>
+      <!-- HERO Y TRAYECTORIA -->
+      <div class="panel on" id="p-hero">
+        <h2>Hero y Trayectoria</h2>
+        <p class="desc">Textos de la portada y la sección de experiencia.</p>
+        <div class="card">
+          <div class="card-title">Sección Hero (portada)</div>
+          <div class="field"><label>Etiqueta superior</label><input type="text" id="f-heroEyebrow"></div>
+          <div class="field"><label>Frase en cursiva</label><input type="text" id="f-heroTag"></div>
+          <div class="field"><label>Descripción corta</label><textarea id="f-heroSub" rows="2"></textarea></div>
         </div>
-        <div class="two-col">
-          <div class="field"><label>Número 2</label><input type="text" id="f-stat2num"></div>
-          <div class="field"><label>Etiqueta 2</label><input type="text" id="f-stat2lbl"></div>
+        <div class="card">
+          <div class="card-title">Trayectoria</div>
+          <div class="field"><label>Título</label><input type="text" id="f-aboutH2"></div>
+          <div class="field"><label>Párrafo 1</label><textarea id="f-aboutP1" rows="4"></textarea></div>
+          <div class="field"><label>Párrafo 2</label><textarea id="f-aboutP2" rows="4"></textarea></div>
+          <div class="field"><label>Párrafo 3</label><textarea id="f-aboutP3" rows="3"></textarea></div>
         </div>
-        <div class="two-col">
-          <div class="field"><label>Texto 3 (línea 1)</label><input type="text" id="f-stat3a"></div>
-          <div class="field"><label>Texto 3 (línea 2)</label><input type="text" id="f-stat3b"></div>
+        <div class="card">
+          <div class="card-title">Estadísticas</div>
+          <div class="two-col">
+            <div class="field"><label>Número 1</label><input type="text" id="f-stat1num"></div>
+            <div class="field"><label>Etiqueta 1</label><input type="text" id="f-stat1lbl"></div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Número 2</label><input type="text" id="f-stat2num"></div>
+            <div class="field"><label>Etiqueta 2</label><input type="text" id="f-stat2lbl"></div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Texto 3 (línea 1)</label><input type="text" id="f-stat3a"></div>
+            <div class="field"><label>Texto 3 (línea 2)</label><input type="text" id="f-stat3b"></div>
+          </div>
+          <div class="field"><label>Etiqueta 3</label><input type="text" id="f-stat3lbl"></div>
         </div>
-        <div class="field"><label>Etiqueta 3</label><input type="text" id="f-stat3lbl"></div>
+        <div class="card">
+          <div class="card-title">Cita destacada</div>
+          <div class="field"><label>Texto</label><textarea id="f-quote" rows="3"></textarea></div>
+          <div class="field"><label>Autor</label><input type="text" id="f-quoteAuthor"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">SEO</div>
+          <div class="field"><label>Título de la página</label><input type="text" id="f-pageTitle"></div>
+          <div class="field"><label>Meta descripción</label><textarea id="f-metaDesc" rows="2"></textarea></div>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-title">Frase destacada (cita)</div>
-        <div class="field"><label>Texto de la cita</label><textarea id="f-quote" rows="3"></textarea></div>
-        <div class="field"><label>Autor</label><input type="text" id="f-quoteAuthor"></div>
+
+      <!-- SERVICIOS -->
+      <div class="panel" id="p-servicios">
+        <h2>Servicios</h2>
+        <p class="desc">Título y descripción de cada tarjeta de servicio.</p>
+        <div class="card">
+          <div class="card-title">Encabezado</div>
+          <div class="field"><label>Título</label><input type="text" id="f-servH2"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-servLead" rows="2"></textarea></div>
+        </div>
+        <div class="card"><div class="serv-lbl">Servicio 01</div>
+          <div class="field"><label>Título</label><input type="text" id="f-s1t"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-s1d" rows="2"></textarea></div>
+        </div>
+        <div class="card"><div class="serv-lbl">Servicio 02</div>
+          <div class="field"><label>Título</label><input type="text" id="f-s2t"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-s2d" rows="2"></textarea></div>
+        </div>
+        <div class="card"><div class="serv-lbl">Servicio 03</div>
+          <div class="field"><label>Título</label><input type="text" id="f-s3t"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-s3d" rows="2"></textarea></div>
+        </div>
+        <div class="card"><div class="serv-lbl">Servicio 04</div>
+          <div class="field"><label>Título</label><input type="text" id="f-s4t"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-s4d" rows="2"></textarea></div>
+        </div>
+        <div class="card"><div class="serv-lbl">Servicio 05</div>
+          <div class="field"><label>Título</label><input type="text" id="f-s5t"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-s5d" rows="2"></textarea></div>
+        </div>
+        <div class="card"><div class="serv-lbl">Servicio 06</div>
+          <div class="field"><label>Título</label><input type="text" id="f-s6t"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-s6d" rows="2"></textarea></div>
+        </div>
+        <div class="card"><div class="serv-lbl">Servicio 07 · Tarjeta ancha</div>
+          <div class="field"><label>Título</label><input type="text" id="f-s7t"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-s7d" rows="2"></textarea></div>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-title">SEO</div>
-        <div class="field"><label>Título de la página</label><input type="text" id="f-pageTitle"></div>
-        <div class="field"><label>Meta descripción</label><textarea id="f-metaDesc" rows="2"></textarea></div>
+
+      <!-- K303 -->
+      <div class="panel" id="p-k303">
+        <h2>Sección K303</h2>
+        <p class="desc">K303 · Business &amp; Industrial Hub.</p>
+        <div class="card">
+          <div class="card-title">Encabezado</div>
+          <div class="field"><label>Título</label><input type="text" id="f-k303title"></div>
+          <div class="field"><label>Párrafo principal</label><textarea id="f-k303lead" rows="3"></textarea></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Especificaciones (4 puntos)</div>
+          <div class="field"><label>Spec 1</label><textarea id="f-k303s1" rows="2"></textarea></div>
+          <div class="field"><label>Spec 2</label><textarea id="f-k303s2" rows="2"></textarea></div>
+          <div class="field"><label>Spec 3</label><textarea id="f-k303s3" rows="2"></textarea></div>
+          <div class="field"><label>Spec 4</label><textarea id="f-k303s4" rows="2"></textarea></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Conectividad</div>
+          <div class="two-col">
+            <div class="field"><label>Dato 1</label><input type="text" id="f-k3c1b"></div>
+            <div class="field"><label>Descripción 1</label><input type="text" id="f-k3c1s"></div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Dato 2</label><input type="text" id="f-k3c2b"></div>
+            <div class="field"><label>Descripción 2</label><input type="text" id="f-k3c2s"></div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Dato 3</label><input type="text" id="f-k3c3b"></div>
+            <div class="field"><label>Descripción 3</label><input type="text" id="f-k3c3s"></div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Dato 4</label><input type="text" id="f-k3c4b"></div>
+            <div class="field"><label>Descripción 4</label><input type="text" id="f-k3c4s"></div>
+          </div>
+        </div>
       </div>
+
+      <!-- CUMBRE Y CONTACTO -->
+      <div class="panel" id="p-cumbre">
+        <h2>Cumbre y Contacto</h2>
+        <p class="desc">Sección Cumbre de Inversiones y sección de Contacto.</p>
+        <div class="card">
+          <div class="card-title">Cumbre de Inversiones</div>
+          <div class="field"><label>Título</label><input type="text" id="f-cumbreH2"></div>
+          <div class="field"><label>Párrafo 1</label><textarea id="f-cumbreP1" rows="4"></textarea></div>
+          <div class="field"><label>Párrafo 2</label><textarea id="f-cumbreP2" rows="3"></textarea></div>
+          <div class="field"><label>Tarjeta · Título del rol</label><input type="text" id="f-cumbreCardName"></div>
+          <div class="field"><label>Tarjeta · Descripción</label><textarea id="f-cumbreCardP" rows="2"></textarea></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Sección de contacto</div>
+          <div class="field"><label>Título</label><input type="text" id="f-contactH2"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-contactLead" rows="2"></textarea></div>
+        </div>
+      </div>
+
+      <!-- RADIO -->
+      <div class="panel" id="p-radio">
+        <h2>Programa de Radio</h2>
+        <p class="desc">Sección "Inversiones Inmobiliarias · Imagen Radio" — tu rol como colaboradora.</p>
+        <div class="card">
+          <div class="card-title">Encabezado</div>
+          <div class="field"><label>Badge (etiqueta pequeña)</label><input type="text" id="f-radioBadge"></div>
+          <div class="field"><label>Eyebrow</label><input type="text" id="f-radioEyebrow"></div>
+          <div class="field"><label>Título</label><input type="text" id="f-radioH2"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-radioLead" rows="3"></textarea></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Estadísticas (3 datos)</div>
+          <div class="three-col">
+            <div class="field"><label>Dato 1</label><input type="text" id="f-rs1b"></div>
+            <div class="field"><label>Dato 2</label><input type="text" id="f-rs2b"></div>
+            <div class="field"><label>Dato 3</label><input type="text" id="f-rs3b"></div>
+          </div>
+          <div class="three-col">
+            <div class="field"><label>Etiqueta 1</label><input type="text" id="f-rs1s"></div>
+            <div class="field"><label>Etiqueta 2</label><input type="text" id="f-rs2s"></div>
+            <div class="field"><label>Etiqueta 3</label><input type="text" id="f-rs3s"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Tarjeta del programa</div>
+          <div class="field"><label>Etiqueta (label)</label><input type="text" id="f-radioCardLabel"></div>
+          <div class="field"><label>Título de la tarjeta</label><input type="text" id="f-radioCardH3"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-radioCardP" rows="2"></textarea></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Horarios (5 filas)</div>
+          <div class="two-col">
+            <div class="field"><label>Día 1</label><input type="text" id="f-rd1d"></div>
+            <div class="field"><label>Hora 1</label><input type="text" id="f-rd1t"></div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Día 2</label><input type="text" id="f-rd2d"></div>
+            <div class="field"><label>Hora 2</label><input type="text" id="f-rd2t"></div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Día 3</label><input type="text" id="f-rd3d"></div>
+            <div class="field"><label>Hora 3</label><input type="text" id="f-rd3t"></div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Día 4</label><input type="text" id="f-rd4d"></div>
+            <div class="field"><label>Hora 4</label><input type="text" id="f-rd4t"></div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Día 5</label><input type="text" id="f-rd5d"></div>
+            <div class="field"><label>Hora 5</label><input type="text" id="f-rd5t"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEDIOS -->
+      <div class="panel" id="p-medios">
+        <h2>Medios y Publicaciones</h2>
+        <p class="desc">Revistas de Mundo Ejecutivo y video de YouTube.</p>
+        <div class="card">
+          <div class="card-title">Edición 1 (Junio 2026)</div>
+          <div class="field"><label>Etiqueta</label><input type="text" id="f-ed1label"></div>
+          <div class="field"><label>Título</label><input type="text" id="f-ed1title"></div>
+          <div class="field"><label>Link Issuu</label><input type="text" id="f-ed1link"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Edición 2 (Marzo 2026)</div>
+          <div class="field"><label>Etiqueta</label><input type="text" id="f-ed2label"></div>
+          <div class="field"><label>Título</label><input type="text" id="f-ed2title"></div>
+          <div class="field"><label>Link Issuu</label><input type="text" id="f-ed2link"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Video YouTube</div>
+          <div class="field"><label>ID del video (parte después de watch?v=)</label><input type="text" id="f-ytId" placeholder="zWE7tophhnQ"></div>
+          <div class="field"><label>Título del video</label><input type="text" id="f-ytTitle"></div>
+          <div class="field"><label>Descripción</label><textarea id="f-ytDesc" rows="2"></textarea></div>
+        </div>
+      </div>
+
+      <!-- IMÁGENES -->
+      <div class="panel" id="p-imagenes">
+        <h2>Imágenes</h2>
+        <p class="desc">JPG, PNG o WebP. Máx 3.5 MB por imagen.</p>
+        <div class="card">
+          <div class="card-title">Fotos de Vanessa</div>
+          <div class="img-grid-3">
+            <div class="img-slot"><label>Hero</label>
+              <img class="img-preview" id="prev-hero" src="/vanessa-hero_upscaled.webp" alt="">
+              <input type="file" id="file-hero" accept="image/*" onchange="previewImg(this,'prev-hero')">
+              <button class="btn btn-ghost" onclick="document.getElementById('file-hero').click()">↑ Cambiar</button>
+            </div>
+            <div class="img-slot"><label>Trayectoria</label>
+              <img class="img-preview" id="prev-sobre" src="/vanessa-sobre-mi_upscaled.webp" alt="">
+              <input type="file" id="file-sobre" accept="image/*" onchange="previewImg(this,'prev-sobre')">
+              <button class="btn btn-ghost" onclick="document.getElementById('file-sobre').click()">↑ Cambiar</button>
+            </div>
+            <div class="img-slot"><label>K303</label>
+              <img class="img-preview" id="prev-depie" src="/vanessa-de-pie_upscaled.webp" alt="">
+              <input type="file" id="file-depie" accept="image/*" onchange="previewImg(this,'prev-depie')">
+              <button class="btn btn-ghost" onclick="document.getElementById('file-depie').click()">↑ Cambiar</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Revistas · Junio</div>
+          <div class="img-grid-4">
+            <div class="img-slot"><label>Portada</label>
+              <img class="img-preview land" id="prev-r0" src="/revista0_upscaled.webp" alt="">
+              <input type="file" id="file-r0" accept="image/*" onchange="previewImg(this,'prev-r0')">
+              <button class="btn btn-ghost" onclick="document.getElementById('file-r0').click()">↑</button>
+            </div>
+            <div class="img-slot"><label>Entrevista</label>
+              <img class="img-preview land" id="prev-r1" src="/Revista-1_upscaled.webp" alt="">
+              <input type="file" id="file-r1" accept="image/*" onchange="previewImg(this,'prev-r1')">
+              <button class="btn btn-ghost" onclick="document.getElementById('file-r1').click()">↑</button>
+            </div>
+            <div class="img-slot"><label>Quintana Roo</label>
+              <img class="img-preview land" id="prev-r3" src="/Revista-3_upscaled.webp" alt="">
+              <input type="file" id="file-r3" accept="image/*" onchange="previewImg(this,'prev-r3')">
+              <button class="btn btn-ghost" onclick="document.getElementById('file-r3').click()">↑</button>
+            </div>
+            <div class="img-slot"><label>La tierra</label>
+              <img class="img-preview land" id="prev-r2" src="/Revista-2_upscaled.webp" alt="">
+              <input type="file" id="file-r2" accept="image/*" onchange="previewImg(this,'prev-r2')">
+              <button class="btn btn-ghost" onclick="document.getElementById('file-r2').click()">↑</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Revistas · Marzo</div>
+          <div class="img-grid-3">
+            <div class="img-slot"><label>Portada</label>
+              <img class="img-preview land" id="prev-rn0" src="/Revista-Nueva-0.webp" alt="">
+              <input type="file" id="file-rn0" accept="image/*" onchange="previewImg(this,'prev-rn0')">
+              <button class="btn btn-ghost" onclick="document.getElementById('file-rn0').click()">↑ Cambiar</button>
+            </div>
+            <div class="img-slot"><label>Epicentro</label>
+              <img class="img-preview land" id="prev-rn1" src="/Revista-Nueva-1.webp" alt="">
+              <input type="file" id="file-rn1" accept="image/*" onchange="previewImg(this,'prev-rn1')">
+              <button class="btn btn-ghost" onclick="document.getElementById('file-rn1').click()">↑ Cambiar</button>
+            </div>
+            <div class="img-slot"><label>Perfil</label>
+              <img class="img-preview land" id="prev-rn2" src="/Revista-Nueva-2.webp" alt="">
+              <input type="file" id="file-rn2" accept="image/*" onchange="previewImg(this,'prev-rn2')">
+              <button class="btn btn-ghost" onclick="document.getElementById('file-rn2').click()">↑ Cambiar</button>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:14px;display:flex;align-items:center;gap:12px">
+          <button class="btn btn-gold" id="saveImgBtn" onclick="saveImages()">💾 Guardar imágenes</button>
+          <span style="font-size:.75rem;color:rgba(236,232,223,.35)">~2 min para publicar</span>
+        </div>
+      </div>
+
+      <!-- REDES -->
+      <div class="panel" id="p-redes">
+        <h2>Redes y WhatsApp</h2>
+        <p class="desc">Se actualizan en todos los botones del sitio automáticamente.</p>
+        <div class="card">
+          <div class="card-title">WhatsApp</div>
+          <div class="field"><label>Número (solo dígitos, con código de país)</label><input type="tel" id="f-phone" placeholder="5219983217478"><p class="hint">Ejemplo: 5219983217478 = +52 998 321 7478</p></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Redes sociales</div>
+          <div class="field"><label>Instagram</label><input type="text" id="f-ig"></div>
+          <div class="field"><label>Facebook</label><input type="text" id="f-fb"></div>
+          <div class="field"><label>LinkedIn</label><input type="text" id="f-li"></div>
+          <div class="field"><label>YouTube canal</label><input type="text" id="f-yt"></div>
+        </div>
+      </div>
+
+      <!-- DISEÑO / COLORES -->
+      <div class="panel" id="p-diseno">
+        <h2>Paleta de colores</h2>
+        <p class="desc">Cambia los colores principales del sitio. Los cambios se aplican en toda la página.</p>
+        <div class="card">
+          <div class="card-title">Colores principales</div>
+          <div class="field"><label>Dorado (gold) — botones, acentos</label>
+            <div class="color-field"><input type="color" id="c-gold" oninput="syncColor(this,'c-gold-hex')"><span id="c-gold-hex">#C2A15C</span></div>
+          </div>
+          <div class="field"><label>Dorado claro (gold-soft)</label>
+            <div class="color-field"><input type="color" id="c-gold-soft" oninput="syncColor(this,'c-gold-soft-hex')"><span id="c-gold-soft-hex">#D8BE86</span></div>
+          </div>
+          <div class="field"><label>Dorado oscuro (gold-deep)</label>
+            <div class="color-field"><input type="color" id="c-gold-deep" oninput="syncColor(this,'c-gold-deep-hex')"><span id="c-gold-deep-hex">#9C7E3F</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Fondos</div>
+          <div class="field"><label>Fondo oscuro principal (ink)</label>
+            <div class="color-field"><input type="color" id="c-ink" oninput="syncColor(this,'c-ink-hex')"><span id="c-ink-hex">#0E0E0F</span></div>
+          </div>
+          <div class="field"><label>Fondo oscuro secundario (ink-2)</label>
+            <div class="color-field"><input type="color" id="c-ink2" oninput="syncColor(this,'c-ink2-hex')"><span id="c-ink2-hex">#15151A</span></div>
+          </div>
+          <div class="field"><label>Fondo muy oscuro (deep)</label>
+            <div class="color-field"><input type="color" id="c-deep" oninput="syncColor(this,'c-deep-hex')"><span id="c-deep-hex">#0A0A0B</span></div>
+          </div>
+          <div class="field"><label>Fondo claro (cream)</label>
+            <div class="color-field"><input type="color" id="c-cream" oninput="syncColor(this,'c-cream-hex')"><span id="c-cream-hex">#FAF8F3</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Texto</div>
+          <div class="field"><label>Texto oscuro principal</label>
+            <div class="color-field"><input type="color" id="c-txt" oninput="syncColor(this,'c-txt-hex')"><span id="c-txt-hex">#26262A</span></div>
+          </div>
+          <div class="field"><label>Texto claro (sobre fondos oscuros)</label>
+            <div class="color-field"><input type="color" id="c-ondark" oninput="syncColor(this,'c-ondark-hex')"><span id="c-ondark-hex">#ECE8DF</span></div>
+          </div>
+        </div>
+        <div style="margin-top:4px">
+          <button class="btn btn-gold" onclick="saveColors()">💾 Guardar colores</button>
+          <button class="btn btn-ghost" style="margin-left:10px" onclick="resetColors()">Restaurar originales</button>
+        </div>
+      </div>
+
+    </div><!-- end form-col -->
+
+    <!-- PREVIEW COLUMN -->
+    <div class="preview-col" id="previewCol">
+      <div class="prev-placeholder" id="prevPlaceholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 19h18M8 22h8" stroke-linecap="round"/></svg>
+        <span>Activa la vista previa para ver tu página</span>
+        <button class="btn btn-ghost btn-sm" onclick="togglePreview()">👁 Activar vista previa</button>
+      </div>
+      <iframe id="previewIframe" style="display:none" title="Vista previa del sitio"></iframe>
     </div>
 
-    <!-- SERVICIOS -->
-    <div class="panel" id="p-servicios">
-      <h2>Servicios</h2>
-      <p class="desc">Título y descripción de cada tarjeta de servicio.</p>
-      <div class="card">
-        <div class="card-title">Encabezado de la sección</div>
-        <div class="field"><label>Título</label><input type="text" id="f-servH2"></div>
-        <div class="field"><label>Descripción introductoria</label><textarea id="f-servLead" rows="2"></textarea></div>
-      </div>
-      <div class="card"><div class="serv-lbl">Servicio 01</div>
-        <div class="field"><label>Título</label><input type="text" id="f-s1t"></div>
-        <div class="field"><label>Descripción</label><textarea id="f-s1d" rows="2"></textarea></div>
-      </div>
-      <div class="card"><div class="serv-lbl">Servicio 02</div>
-        <div class="field"><label>Título</label><input type="text" id="f-s2t"></div>
-        <div class="field"><label>Descripción</label><textarea id="f-s2d" rows="2"></textarea></div>
-      </div>
-      <div class="card"><div class="serv-lbl">Servicio 03</div>
-        <div class="field"><label>Título</label><input type="text" id="f-s3t"></div>
-        <div class="field"><label>Descripción</label><textarea id="f-s3d" rows="2"></textarea></div>
-      </div>
-      <div class="card"><div class="serv-lbl">Servicio 04</div>
-        <div class="field"><label>Título</label><input type="text" id="f-s4t"></div>
-        <div class="field"><label>Descripción</label><textarea id="f-s4d" rows="2"></textarea></div>
-      </div>
-      <div class="card"><div class="serv-lbl">Servicio 05</div>
-        <div class="field"><label>Título</label><input type="text" id="f-s5t"></div>
-        <div class="field"><label>Descripción</label><textarea id="f-s5d" rows="2"></textarea></div>
-      </div>
-      <div class="card"><div class="serv-lbl">Servicio 06</div>
-        <div class="field"><label>Título</label><input type="text" id="f-s6t"></div>
-        <div class="field"><label>Descripción</label><textarea id="f-s6d" rows="2"></textarea></div>
-      </div>
-      <div class="card"><div class="serv-lbl">Servicio 07 (tarjeta ancha)</div>
-        <div class="field"><label>Título</label><input type="text" id="f-s7t"></div>
-        <div class="field"><label>Descripción</label><textarea id="f-s7d" rows="2"></textarea></div>
-      </div>
-    </div>
+  </div><!-- end main -->
 
-    <!-- K303 -->
-    <div class="panel" id="p-k303">
-      <h2>Sección K303</h2>
-      <p class="desc">Textos del proyecto K303 · Business &amp; Industrial Hub.</p>
-      <div class="card">
-        <div class="card-title">Encabezado K303</div>
-        <div class="field"><label>Título</label><input type="text" id="f-k303title"></div>
-        <div class="field"><label>Párrafo principal</label><textarea id="f-k303lead" rows="3"></textarea></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Especificaciones (4 puntos)</div>
-        <div class="field"><label>Spec 1</label><textarea id="f-k303s1" rows="2"></textarea></div>
-        <div class="field"><label>Spec 2</label><textarea id="f-k303s2" rows="2"></textarea></div>
-        <div class="field"><label>Spec 3</label><textarea id="f-k303s3" rows="2"></textarea></div>
-        <div class="field"><label>Spec 4</label><textarea id="f-k303s4" rows="2"></textarea></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Conectividad (4 puntos)</div>
-        <div class="two-col">
-          <div class="field"><label>Dato 1 (ej: 2.5 km)</label><input type="text" id="f-k3c1b"></div>
-          <div class="field"><label>Descripción 1</label><input type="text" id="f-k3c1s"></div>
-        </div>
-        <div class="two-col">
-          <div class="field"><label>Dato 2</label><input type="text" id="f-k3c2b"></div>
-          <div class="field"><label>Descripción 2</label><input type="text" id="f-k3c2s"></div>
-        </div>
-        <div class="two-col">
-          <div class="field"><label>Dato 3</label><input type="text" id="f-k3c3b"></div>
-          <div class="field"><label>Descripción 3</label><input type="text" id="f-k3c3s"></div>
-        </div>
-        <div class="two-col">
-          <div class="field"><label>Dato 4</label><input type="text" id="f-k3c4b"></div>
-          <div class="field"><label>Descripción 4</label><input type="text" id="f-k3c4s"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CUMBRE Y CONTACTO -->
-    <div class="panel" id="p-cumbre">
-      <h2>Cumbre y Contacto</h2>
-      <p class="desc">Textos de la sección Cumbre de Inversiones y la sección de Contacto.</p>
-      <div class="card">
-        <div class="card-title">Cumbre de Inversiones</div>
-        <div class="field"><label>Título</label><input type="text" id="f-cumbreH2"></div>
-        <div class="field"><label>Párrafo 1</label><textarea id="f-cumbreP1" rows="4"></textarea></div>
-        <div class="field"><label>Párrafo 2</label><textarea id="f-cumbreP2" rows="3"></textarea></div>
-        <div class="field"><label>Tarjeta · Título del rol</label><input type="text" id="f-cumbreCardName"></div>
-        <div class="field"><label>Tarjeta · Descripción</label><textarea id="f-cumbreCardP" rows="2"></textarea></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Sección de contacto</div>
-        <div class="field"><label>Título</label><input type="text" id="f-contactH2"></div>
-        <div class="field"><label>Descripción</label><textarea id="f-contactLead" rows="2"></textarea></div>
-      </div>
-    </div>
-
-    <!-- MEDIOS -->
-    <div class="panel" id="p-medios">
-      <h2>Medios y Publicaciones</h2>
-      <p class="desc">Edita los títulos, fechas y links de cada revista, y el video de YouTube.</p>
-      <div class="card">
-        <div class="card-title">Edición 1 (Junio 2026)</div>
-        <div class="field"><label>Etiqueta (ej: Edición · Junio 2026)</label><input type="text" id="f-ed1label"></div>
-        <div class="field"><label>Título de la edición</label><input type="text" id="f-ed1title"></div>
-        <div class="field"><label>Link de Issuu (URL completa)</label><input type="text" id="f-ed1link"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Edición 2 (Marzo 2026)</div>
-        <div class="field"><label>Etiqueta</label><input type="text" id="f-ed2label"></div>
-        <div class="field"><label>Título de la edición</label><input type="text" id="f-ed2title"></div>
-        <div class="field"><label>Link de Issuu (URL completa)</label><input type="text" id="f-ed2link"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Video YouTube</div>
-        <div class="field"><label>ID del video (lo que va después de watch?v=)</label><input type="text" id="f-ytId" placeholder="zWE7tophhnQ"><p class="hint">Ejemplo: youtube.com/watch?v=<b>zWE7tophhnQ</b> → escribe solo: zWE7tophhnQ</p></div>
-        <div class="field"><label>Título del video</label><input type="text" id="f-ytTitle"></div>
-        <div class="field"><label>Descripción del video</label><textarea id="f-ytDesc" rows="2"></textarea></div>
-      </div>
-    </div>
-
-    <!-- IMÁGENES -->
-    <div class="panel" id="p-imagenes">
-      <h2>Imágenes</h2>
-      <p class="desc">Reemplaza las fotos. Formatos: JPG, PNG, WebP. Máx 3.5 MB por imagen.</p>
-      <div class="card">
-        <div class="card-title">Fotos de Vanessa</div>
-        <div class="img-grid">
-          <div class="img-slot"><label>Hero (portada)</label>
-            <img class="img-preview" id="prev-hero" src="/vanessa-hero_upscaled.webp" alt="">
-            <input type="file" id="file-hero" accept="image/*" onchange="previewImg(this,'prev-hero')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-hero').click()">↑ Cambiar</button>
-          </div>
-          <div class="img-slot"><label>Trayectoria</label>
-            <img class="img-preview" id="prev-sobre" src="/vanessa-sobre-mi_upscaled.webp" alt="">
-            <input type="file" id="file-sobre" accept="image/*" onchange="previewImg(this,'prev-sobre')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-sobre').click()">↑ Cambiar</button>
-          </div>
-          <div class="img-slot"><label>K303</label>
-            <img class="img-preview" id="prev-depie" src="/vanessa-de-pie_upscaled.webp" alt="">
-            <input type="file" id="file-depie" accept="image/*" onchange="previewImg(this,'prev-depie')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-depie').click()">↑ Cambiar</button>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Revistas · Edición Junio</div>
-        <div class="img-grid-4">
-          <div class="img-slot"><label>Portada</label>
-            <img class="img-preview land" id="prev-r0" src="/revista0_upscaled.webp" alt="">
-            <input type="file" id="file-r0" accept="image/*" onchange="previewImg(this,'prev-r0')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-r0').click()">↑ Cambiar</button>
-          </div>
-          <div class="img-slot"><label>Entrevista</label>
-            <img class="img-preview land" id="prev-r1" src="/Revista-1_upscaled.webp" alt="">
-            <input type="file" id="file-r1" accept="image/*" onchange="previewImg(this,'prev-r1')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-r1').click()">↑ Cambiar</button>
-          </div>
-          <div class="img-slot"><label>Quintana Roo</label>
-            <img class="img-preview land" id="prev-r3" src="/Revista-3_upscaled.webp" alt="">
-            <input type="file" id="file-r3" accept="image/*" onchange="previewImg(this,'prev-r3')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-r3').click()">↑ Cambiar</button>
-          </div>
-          <div class="img-slot"><label>La tierra</label>
-            <img class="img-preview land" id="prev-r2" src="/Revista-2_upscaled.webp" alt="">
-            <input type="file" id="file-r2" accept="image/*" onchange="previewImg(this,'prev-r2')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-r2').click()">↑ Cambiar</button>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Revistas · Edición Marzo</div>
-        <div class="img-grid">
-          <div class="img-slot"><label>Portada</label>
-            <img class="img-preview land" id="prev-rn0" src="/Revista-Nueva-0.webp" alt="">
-            <input type="file" id="file-rn0" accept="image/*" onchange="previewImg(this,'prev-rn0')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-rn0').click()">↑ Cambiar</button>
-          </div>
-          <div class="img-slot"><label>Epicentro</label>
-            <img class="img-preview land" id="prev-rn1" src="/Revista-Nueva-1.webp" alt="">
-            <input type="file" id="file-rn1" accept="image/*" onchange="previewImg(this,'prev-rn1')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-rn1').click()">↑ Cambiar</button>
-          </div>
-          <div class="img-slot"><label>Perfil</label>
-            <img class="img-preview land" id="prev-rn2" src="/Revista-Nueva-2.webp" alt="">
-            <input type="file" id="file-rn2" accept="image/*" onchange="previewImg(this,'prev-rn2')">
-            <button class="btn btn-ghost" onclick="document.getElementById('file-rn2').click()">↑ Cambiar</button>
-          </div>
-        </div>
-      </div>
-      <div style="margin-top:16px">
-        <button class="btn btn-gold" id="saveImgBtn" onclick="saveImages()">💾 Guardar imágenes seleccionadas</button>
-        <span style="font-size:.78rem;color:rgba(236,232,223,.38);margin-left:14px">~2 minutos para publicar</span>
-      </div>
-    </div>
-
-    <!-- REDES Y WHATSAPP -->
-    <div class="panel" id="p-redes">
-      <h2>Redes y WhatsApp</h2>
-      <p class="desc">El número y links se actualizan en todos los botones del sitio automáticamente.</p>
-      <div class="card">
-        <div class="card-title">WhatsApp</div>
-        <div class="field"><label>Número (solo dígitos con código de país)</label><input type="tel" id="f-phone" placeholder="5219983217478"><p class="hint">Ejemplo: 5219983217478 = +52 998 321 7478. Sin + ni espacios.</p></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Redes sociales</div>
-        <div class="field"><label>Instagram (URL completa)</label><input type="text" id="f-ig"></div>
-        <div class="field"><label>Facebook (URL completa)</label><input type="text" id="f-fb"></div>
-        <div class="field"><label>LinkedIn (URL completa)</label><input type="text" id="f-li"></div>
-        <div class="field"><label>YouTube canal (URL completa)</label><input type="text" id="f-yt"></div>
-      </div>
-    </div>
-
-    <div class="save-bar" id="saveBar">
-      <button class="btn btn-gold" id="saveBtn" onclick="saveTexts()">💾 Guardar cambios</button>
-      <span class="note">El sitio se actualiza en ~2 minutos</span>
-    </div>
+  <div class="save-bar" id="saveBar">
+    <button class="btn btn-gold" id="saveBtn" onclick="saveTexts()">💾 Guardar cambios</button>
+    <span class="note" id="saveNote">El sitio se actualiza en ~2 minutos tras guardar</span>
+    <button class="btn btn-ghost btn-sm" id="previewToggle" onclick="togglePreview()">👁 Vista previa</button>
+    <button class="btn btn-ghost btn-sm" onclick="window.open('https://vanessalegorreta.com','_blank')">🔗 Ver sitio</button>
   </div>
 </div>
 
@@ -357,73 +518,100 @@ input[type=file]{display:none}
 
 <script>
 let pw='',html='',sha='',orig={};
+let previewOn=false;
 
+// ── utils ────────────────────────────────────────────────────────────────────
 function toast(msg,type='ok'){const el=document.getElementById('toast');el.textContent=msg;el.className='toast on '+type;clearTimeout(el._t);el._t=setTimeout(()=>el.className='toast',4500);}
 function get(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 function set(id,val){const el=document.getElementById(id);if(el)el.value=val||'';}
 function extract(h,b,a){const i=h.indexOf(b);if(i<0)return'';const s=i+b.length,e=h.indexOf(a,s);return e<0?'':h.slice(s,e);}
-function replFirst(h,b,oldV,a,newV){if(!oldV)return h;const t=b+oldV+a,i=h.indexOf(t);if(i<0)return h;return h.slice(0,i)+b+newV+a+h.slice(i+t.length);}
+function replFirst(h,b,ov,a,nv){if(ov===undefined||ov===null)return h;const t=b+ov+a,i=h.indexOf(t);if(i<0)return h;return h.slice(0,i)+b+nv+a+h.slice(i+t.length);}
 function replAll(h,o,n){if(!o||o===n)return h;return h.split(o).join(n);}
 function replPara(h,cls,o,n){if(!o||o===n)return h;const old='<p class="'+cls+'">'+o+'</p>',neu='<p class="'+cls+'">'+n+'</p>',i=h.indexOf(old);if(i<0)return h;return h.slice(0,i)+neu+h.slice(i+old.length);}
 function replUniq(h,tag,cls,o,n){if(!o||o===n)return h;const old='<'+tag+' class="'+cls+'">'+o+'</'+tag+'>',neu='<'+tag+' class="'+cls+'">'+n+'</'+tag+'>',i=h.indexOf(old);if(i<0)return h;return h.slice(0,i)+neu+h.slice(i+old.length);}
 
+// ── UI ───────────────────────────────────────────────────────────────────────
 function show(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.sb-btn').forEach(b=>b.classList.remove('on'));
   document.getElementById('p-'+name).classList.add('on');btn.classList.add('on');
-  document.getElementById('saveBar').style.display=name==='imagenes'?'none':'flex';
+  const isImg=name==='imagenes';
+  document.getElementById('saveBar').style.display=isImg?'none':'flex';
 }
 function previewImg(inp,pid){if(!inp.files[0])return;const r=new FileReader();r.onload=e=>document.getElementById(pid).src=e.target.result;r.readAsDataURL(inp.files[0]);}
 
+// ── PREVIEW ──────────────────────────────────────────────────────────────────
+function togglePreview(){
+  previewOn=!previewOn;
+  const main=document.getElementById('mainArea');
+  const btn=document.getElementById('previewToggle');
+  main.classList.toggle('no-preview',!previewOn);
+  btn.classList.toggle('active',previewOn);
+  btn.textContent=previewOn?'✕ Cerrar preview':'👁 Vista previa';
+  if(previewOn&&html)updatePreview();
+  // also update placeholder button
+  if(!previewOn){document.getElementById('prevPlaceholder').style.display='flex';document.getElementById('previewIframe').style.display='none';}
+}
+
+function updatePreview(){
+  if(!previewOn||!html)return;
+  // Rewrite relative image paths to absolute
+  const BASE='https://vanessalegorreta.com/';
+  let h=html;
+  h=h.replace(/src="([\w\-]+\.webp)"/g,'src="'+BASE+'$1"');
+  h=h.replace(/src="([\w\-]+\.jpg)"/g,'src="'+BASE+'$1"');
+  const blob=new Blob([h],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const iframe=document.getElementById('previewIframe');
+  const placeholder=document.getElementById('prevPlaceholder');
+  iframe.onload=()=>URL.revokeObjectURL(url);
+  iframe.src=url;
+  iframe.style.display='block';
+  placeholder.style.display='none';
+}
+
+// ── API ──────────────────────────────────────────────────────────────────────
 async function api(body){
   const r=await fetch('/api/cms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw,...body})});
   const d=await r.json();if(!r.ok||!d.success)throw new Error(d.error||'Error');return d;
 }
 
+// ── LOGIN ────────────────────────────────────────────────────────────────────
 async function doLogin(){
   pw=document.getElementById('pw').value.trim();if(!pw)return;
   const btn=document.getElementById('loginBtn'),err=document.getElementById('loginErr');
   btn.disabled=true;btn.textContent='Conectando...';err.style.display='none';
-  try{const res=await api({action:'get'});html=res.html;sha=res.sha;populateForm();
+  try{
+    const res=await api({action:'get'});html=res.html;sha=res.sha;
+    populateForm();
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('appScreen').classList.add('on');
   }catch(e){err.textContent=e.message;err.style.display='block';}
   finally{btn.disabled=false;btn.textContent='Entrar';}
 }
 
+// ── POPULATE ─────────────────────────────────────────────────────────────────
 function populateForm(){
   const h=html;
-  // Hero
   set('f-heroEyebrow',extract(h,'<div class="hero__content">\n      <span class="eyebrow">','</span>'));
   set('f-heroTag',    extract(h,'<p class="hero__tag">','</p>'));
   set('f-heroSub',    extract(h,'<p class="hero__sub">','</p>'));
-  // About
-  set('f-aboutH2',extract(h,'Trayectoria y experiencia</span>\n        <h2 class="h2 reveal d1">','</h2>'));
+  set('f-aboutH2',    extract(h,'Trayectoria y experiencia</span>\n        <h2 class="h2 reveal d1">','</h2>'));
   set('f-aboutP1','Soy Vanessa'+extract(h,'<p class="reveal d2">Soy Vanessa','</p>\n        <p class="reveal d2">Me'));
   set('f-aboutP2','Me especializo'+extract(h,'<p class="reveal d2">Me especializo','</p>\n        <p class="reveal d3">'));
   set('f-aboutP3','Mi forma'+extract(h,'<p class="reveal d3">Mi forma','</p>\n        <div class="sign'));
-  // Stats — find by data-target values
-  const s1m=h.match(/data-target="(\d+)"[\s\S]{0,30}?<\/span>\n\s+<\/div>\n\s+<div class="stat__label">Años/);
-  set('f-stat1num',s1m?s1m[1]:'22');
+  const s1m=h.match(/data-target="(\d+)"/);set('f-stat1num',s1m?s1m[1]:'22');
   set('f-stat1lbl',extract(h,'<div class="stat__label">Años de experiencia','</div>'));
-  const s2m=h.match(/data-target="(\d+)"[\s\S]{0,30}?<\/span>\n\s+<\/div>\n\s+<div class="stat__label">Destinos/);
+  const s2m=h.match(/data-target="(\d+)"[^>]*>0<\/span>\n\s+<\/div>\n\s+<div class="stat__label">Destinos/);
   set('f-stat2num',s2m?s2m[1]:'6');
   set('f-stat2lbl',extract(h,'<div class="stat__label">Destinos de','</div>'));
   set('f-stat3a',extract(h,'<div class="stat__txt">','<br>'));
   set('f-stat3b',extract(h,'<div class="stat__txt">'+get('f-stat3a')+'<br>','</div>'));
-  set('f-stat3lbl',extract(h,'</div>\n            <div class="stat__label">'+extract(h,'<div class="stat__label">Asesoría','</div>').slice(0,1)||
-    extract(h,'<div class="stat__txt">','</div>\n            <div class="stat__label">').includes('Nacional')?
-    '<div class="stat__txt">Nacional<br>e Internacional</div>\n            <div class="stat__label">':'',
-    '</div>').replace(/^\s/,'')||extract(h,'orial\n          </div>','</div>').trim().split('\n').pop().trim());
-  // simpler stat3lbl
   set('f-stat3lbl',extract(h,'<div class="stat__label">Asesoría a','</div>'));
-  // Quote
-  set('f-quote',      extract(h,'<blockquote class="quote reveal">\n      <p>','</p>'));
+  set('f-quote',extract(h,'<blockquote class="quote reveal">\n      <p>','</p>'));
   set('f-quoteAuthor',extract(h,'<cite>','</cite>'));
-  // SEO
   set('f-pageTitle',extract(h,'<title>','</title>'));
   set('f-metaDesc', extract(h,'<meta name="description" content="','">'));
-  // Servicios
   set('f-servH2',  extract(h,'<h2 class="h2 reveal d1">Servicios','</h2>'));
   set('f-servLead',extract(h,'<p class="lead reveal d2">Soluciones','</p>'));
   for(let n=1;n<=6;n++){
@@ -434,145 +622,188 @@ function populateForm(){
   const wide=extract(h,'<div class="serv__card serv__card--wide reveal">','<a class="btn');
   set('f-s7t',extract(wide,'<h3 class="serv__title">','</h3>'));
   set('f-s7d',extract(wide,'<p class="serv__desc">','</p>'));
-  // K303
   set('f-k303title',extract(h,'<h2 class="k303__title reveal d1">','</h2>'));
   set('f-k303lead', extract(h,'<p class="k303__lead reveal d2">','</p>').replace(/<b>|<\/b>/g,''));
-  // specs
   const specRaw=extract(h,'<ul class="k303__specs">','</ul>');
-  let si=0,sm,sre=/<span>([\s\S]*?)<\/span>/g;while((sm=sre.exec(specRaw))&&si<4){set('f-k303s'+(++si),sm[1].replace(/<b>|<\/b>/g,''));}
-  // connectivity
+  let si=0,sm,sre=/<span>([\s\S]*?)<\/span>/g;while((sm=sre.exec(specRaw))&&si<4)set('f-k303s'+(++si),sm[1].replace(/<b>|<\/b>/g,''));
   const connRaw=extract(h,'<div class="k303__connect-grid">','<div class="k303__amen">');
   const bolds=[...connRaw.matchAll(/<b>([\s\S]*?)<\/b>/g)].map(m=>m[1]);
   const cspans=[...connRaw.matchAll(/<span>([\s\S]*?)<\/span>/g)].map(m=>m[1]);
   [0,1,2,3].forEach(i=>{set('f-k3c'+(i+1)+'b',bolds[i]||'');set('f-k3c'+(i+1)+'s',cspans[i]||'');});
-  // Cumbre
   set('f-cumbreH2',      extract(h,'<h2 class="h2 reveal d1">Cumbre','</h2>'));
   set('f-cumbreP1',      extract(h,'<p class="lead reveal d2">Como Directora','</p>\n        <p class="lead reveal d2" style'));
   set('f-cumbreP2',      extract(h,'<p class="lead reveal d2" style="margin-top:18px">','</p>'));
   set('f-cumbreCardName',extract(h,'<div class="name">','</div>'));
   set('f-cumbreCardP',   extract(h,'<p>Un punto de encuentro','</p>'));
-  // Contacto
   set('f-contactH2',  extract(h,'<h2 class="h2 reveal d1">Hablemos','</h2>'));
   set('f-contactLead',extract(h,'<p class="lead reveal d2" style="margin-bottom:34px">','</p>'));
+  // Radio section
+  set('f-radioBadge',  extract(h,'<div class="radio__collab-badge reveal">\n          <svg','Colaboradora · Imagen Radio').replace(/.*>/,'').trim()||'Colaboradora · Imagen Radio');
+  set('f-radioEyebrow',extract(h,'class="eyebrow reveal">En el aire','</span>').replace(/[^a-záéíóúñÁÉÍÓÚÑ\s·]/g,'')||'En el aire');
+  set('f-radioH2',     extract(h,'class="h2 reveal d1">Inversiones Inmobiliarias','</h2>').replace(/^·\s*/,'')||'Inversiones Inmobiliarias · Imagen Radio');
+  set('f-radioLead',   extract(h,'class="lead reveal d2">Participo','</p>').replace(/^Participo\s+/,'')||'');
+  // radio stats
+  const radioStats=extract(h,'<div class="radio__stats','</div>\n        <div class="hero__actions');
+  const rsbolds=[...radioStats.matchAll(/<b>([\s\S]*?)<\/b>/g)].map(m=>m[1]);
+  const rsspans=[...radioStats.matchAll(/<span>([\s\S]*?)<\/span>/g)].map(m=>m[1]);
+  [0,1,2].forEach(i=>{set('f-rs'+(i+1)+'b',rsbolds[i]||'');set('f-rs'+(i+1)+'s',rsspans[i]||'');});
+  set('f-radioCardLabel',extract(h,'<div class="radio__card-label">','</div>'));
+  set('f-radioCardH3',   extract(h,'<div class="radio__card-label">'+get('f-radioCardLabel')+'</div>\n        <h3>','</h3>'));
+  set('f-radioCardP',    extract(h,'<div class="radio__card-label">'+get('f-radioCardLabel')+'</div>\n        <h3>'+get('f-radioCardH3')+'</h3>\n        <p>','</p>'));
+  // schedule rows
+  const sched=extract(h,'<ul class="radio__schedule">','</ul>');
+  const schedRows=[...sched.matchAll(/<span class="day">([\s\S]*?)<\/span><span class="time">([\s\S]*?)<\/span>/g)];
+  schedRows.forEach((m,i)=>{if(i<5){set('f-rd'+(i+1)+'d',m[1]);set('f-rd'+(i+1)+'t',m[2]);}});
   // Medios
   const ed1=extract(h,'<div class="medios__edition">','<div class="medios__edition">\n      <span class="eyebrow reveal">Las');
   set('f-ed1label',extract(ed1,'<span class="eyebrow reveal">','</span>'));
   set('f-ed1title',extract(ed1,'<h3 class="medios__ed-title reveal d1">','</h3>'));
-  set('f-ed1link', (h.match(/issuu\.com[^"]*junio[^"]*/)||[])[0]||'');
+  set('f-ed1link',(h.match(/issuu\.com[^"]*junio[^"]*/)||[])[0]||'');
   const idx2=h.indexOf('<div class="medios__edition">\n      <span class="eyebrow reveal">Las');
-  if(idx2>=0){const ed2=h.slice(idx2);
-    set('f-ed2label',extract(ed2,'<span class="eyebrow reveal">','</span>'));
-    set('f-ed2title',extract(ed2,'<h3 class="medios__ed-title reveal d1">','</h3>'));
-  }
+  if(idx2>=0){const ed2=h.slice(idx2);set('f-ed2label',extract(ed2,'<span class="eyebrow reveal">','</span>'));set('f-ed2title',extract(ed2,'<h3 class="medios__ed-title reveal d1">','</h3>'));}
   set('f-ed2link',(h.match(/issuu\.com[^"]*marzo[^"]*/)||[])[0]||'');
-  const ytm=h.match(/embed\/([\w-]+)"/);
-  set('f-ytId',ytm?ytm[1]:'');
+  const ytm=h.match(/embed\/([\w-]+)"/);set('f-ytId',ytm?ytm[1]:'');
   set('f-ytTitle',extract(h,'<h3>','</h3>\n        <p>'));
   set('f-ytDesc', extract(h,'</h3>\n        <p>','</p>\n        <a class="btn btn--ghost"'));
-  // Redes
   set('f-phone',(h.match(/wa\.me\/(\d+)/)||[])[1]||'');
   set('f-ig',(h.match(/href="(https:\/\/www\.instagram\.com\/[^"]+)"/)||[])[1]||'');
   set('f-fb',(h.match(/href="(https:\/\/www\.facebook\.com\/[^"]+)"/)||[])[1]||'');
   set('f-li',(h.match(/href="(https:\/\/www\.linkedin\.com\/in\/[^"]+)"/)||[])[1]||'');
   set('f-yt',(h.match(/href="(https:\/\/youtube\.com\/@[^"]+)"/)||[])[1]||'');
-  // Snapshot originals
+  // Colors
+  populateColors(h);
   orig={};document.querySelectorAll('[id^="f-"]').forEach(el=>{orig[el.id]=el.value;});
 }
 
+// ── COLORS ───────────────────────────────────────────────────────────────────
+const colorMap={
+  'c-gold':'--gold','c-gold-soft':'--gold-soft','c-gold-deep':'--gold-deep',
+  'c-ink':'--ink','c-ink2':'--ink-2','c-deep':'--deep',
+  'c-cream':'--cream','c-txt':'--txt','c-ondark':'--txt-on-dark'
+};
+function populateColors(h){
+  const m=h.match(/:root\{([\s\S]*?)\}/);if(!m)return;
+  const css=m[1];
+  Object.entries(colorMap).forEach(([id,varName])=>{
+    const re=new RegExp(varName.replace('-','\\-')+':([^;]+);');
+    const vm=css.match(re);if(!vm)return;
+    const hex=vm[1].trim();
+    const picker=document.getElementById(id);
+    const label=document.getElementById(id+'-hex');
+    if(picker&&hex.startsWith('#')){picker.value=hex;if(label)label.textContent=hex;}
+  });
+}
+function syncColor(picker,hexId){document.getElementById(hexId).textContent=picker.value;}
+function resetColors(){populateColors(html);}
+function saveColors(){
+  let h=html;
+  Object.entries(colorMap).forEach(([id,varName])=>{
+    const picker=document.getElementById(id);if(!picker)return;
+    const newHex=picker.value;
+    // Find and replace the CSS variable value in :root
+    const re=new RegExp('('+varName.replace('-','\\-')+':)([^;]+)(;)');
+    const m=h.match(/:root\{([\s\S]*?)\}/);
+    if(m){const newRoot=m[0].replace(re,'$1'+newHex+'$3');h=h.replace(m[0],newRoot);}
+  });
+  // Also update gradient that uses the three gold values
+  const g=document.getElementById('c-gold')?.value||'#C2A15C';
+  const gs=document.getElementById('c-gold-soft')?.value||'#D8BE86';
+  const gd=document.getElementById('c-gold-deep')?.value||'#9C7E3F';
+  const oldGrad=extract(html,'--gold-grad:',';\n');
+  const newGrad='linear-gradient(135deg,'+gs+' 0%,'+g+' 52%,'+gd+' 100%)';
+  if(oldGrad)h=replAll(h,'--gold-grad:'+oldGrad+';','--gold-grad:'+newGrad+';');
+  // stage the change and save
+  html=h;
+  saveHtmlToGithub(h).then(()=>{toast('🎨 Colores guardados. Sitio actualiza en ~2 min.');}).catch(e=>toast('❌ '+e.message,'err'));
+}
+
+async function saveHtmlToGithub(h){
+  const res=await api({action:'save-html',sha,html:h});
+  const fresh=await api({action:'get'});
+  html=fresh.html;sha=fresh.sha;
+  if(previewOn)updatePreview();
+}
+
+// ── SAVE TEXTS ───────────────────────────────────────────────────────────────
 async function saveTexts(){
   const btn=document.getElementById('saveBtn');btn.disabled=true;btn.textContent='Guardando...';
   try{
-    let h=html;
-    const g=id=>get(id),o=id=>orig[id]||'';
-    // Hero
+    let h=html;const g=id=>get(id),o=id=>orig[id]||'';
     h=replFirst(h,'<div class="hero__content">\n      <span class="eyebrow">',o('f-heroEyebrow'),'</span>',g('f-heroEyebrow'));
     h=replFirst(h,'<p class="hero__tag">',o('f-heroTag'),'</p>',g('f-heroTag'));
     h=replFirst(h,'<p class="hero__sub">',o('f-heroSub'),'</p>',g('f-heroSub'));
-    // About
     h=replFirst(h,'Trayectoria y experiencia</span>\n        <h2 class="h2 reveal d1">',o('f-aboutH2'),'</h2>',g('f-aboutH2'));
     h=replPara(h,'reveal d2',o('f-aboutP1'),g('f-aboutP1'));
     h=replPara(h,'reveal d2',o('f-aboutP2'),g('f-aboutP2'));
     h=replPara(h,'reveal d3',o('f-aboutP3'),g('f-aboutP3'));
-    // Stats
     if(g('f-stat1num')!==o('f-stat1num'))h=h.replace('data-target="'+o('f-stat1num')+'"','data-target="'+g('f-stat1num')+'"');
     h=replFirst(h,'<div class="stat__label">Años de experiencia',o('f-stat1lbl'),'</div>',g('f-stat1lbl'));
     if(g('f-stat2num')!==o('f-stat2num'))h=h.replace('data-target="'+o('f-stat2num')+'"','data-target="'+g('f-stat2num')+'"');
     h=replFirst(h,'<div class="stat__label">Destinos de',o('f-stat2lbl'),'</div>',g('f-stat2lbl'));
     h=replFirst(h,'<div class="stat__txt">',o('f-stat3a')+'<br>'+o('f-stat3b'),'</div>',g('f-stat3a')+'<br>'+g('f-stat3b'));
     h=replFirst(h,'<div class="stat__label">Asesoría a',o('f-stat3lbl'),'</div>',g('f-stat3lbl'));
-    // Quote
     h=replFirst(h,'<blockquote class="quote reveal">\n      <p>',o('f-quote'),'</p>',g('f-quote'));
     h=replFirst(h,'<cite>',o('f-quoteAuthor'),'</cite>',g('f-quoteAuthor'));
-    // SEO
     h=replFirst(h,'<title>',o('f-pageTitle'),'</title>',g('f-pageTitle'));
     h=replFirst(h,'<meta name="description" content="',o('f-metaDesc'),'">',g('f-metaDesc'));
-    // Servicios
     h=replFirst(h,'<h2 class="h2 reveal d1">Servicios',o('f-servH2'),'</h2>',g('f-servH2'));
     h=replFirst(h,'<p class="lead reveal d2">Soluciones',o('f-servLead'),'</p>',g('f-servLead'));
-    for(let n=1;n<=7;n++){
-      h=replUniq(h,'h3','serv__title',o('f-s'+n+'t'),g('f-s'+n+'t'));
-      h=replUniq(h,'p','serv__desc',o('f-s'+n+'d'),g('f-s'+n+'d'));
-    }
-    // K303
+    for(let n=1;n<=7;n++){h=replUniq(h,'h3','serv__title',o('f-s'+n+'t'),g('f-s'+n+'t'));h=replUniq(h,'p','serv__desc',o('f-s'+n+'d'),g('f-s'+n+'d'));}
     h=replFirst(h,'<h2 class="k303__title reveal d1">',o('f-k303title'),'</h2>',g('f-k303title'));
-    // k303 lead: replace stripping <b> formatting
     const k3lFull=extract(html,'<p class="k303__lead reveal d2">','</p>');
     h=replFirst(h,'<p class="k303__lead reveal d2">',k3lFull,'</p>',g('f-k303lead'));
-    // K303 specs
     for(let i=1;i<=4;i++){if(o('f-k303s'+i)&&g('f-k303s'+i)!==o('f-k303s'+i))h=replAll(h,'<span>'+o('f-k303s'+i)+'</span>','<span>'+g('f-k303s'+i)+'</span>');}
-    // K303 connectivity
     for(let i=1;i<=4;i++){
       if(o('f-k3c'+i+'b')&&g('f-k3c'+i+'b')!==o('f-k3c'+i+'b'))h=replAll(h,'<b>'+o('f-k3c'+i+'b')+'</b>','<b>'+g('f-k3c'+i+'b')+'</b>');
       if(o('f-k3c'+i+'s')&&g('f-k3c'+i+'s')!==o('f-k3c'+i+'s'))h=replAll(h,'<span>'+o('f-k3c'+i+'s')+'</span>','<span>'+g('f-k3c'+i+'s')+'</span>');
     }
-    // Cumbre
     h=replFirst(h,'<h2 class="h2 reveal d1">Cumbre',o('f-cumbreH2'),'</h2>',g('f-cumbreH2'));
     h=replFirst(h,'<p class="lead reveal d2">Como Directora',o('f-cumbreP1'),'</p>',g('f-cumbreP1'));
     h=replFirst(h,'<p class="lead reveal d2" style="margin-top:18px">',o('f-cumbreP2'),'</p>',g('f-cumbreP2'));
     h=replFirst(h,'<div class="name">',o('f-cumbreCardName'),'</div>',g('f-cumbreCardName'));
     h=replFirst(h,'<p>Un punto de encuentro',o('f-cumbreCardP'),'</p>',g('f-cumbreCardP'));
-    // Contacto
     h=replFirst(h,'<h2 class="h2 reveal d1">Hablemos',o('f-contactH2'),'</h2>',g('f-contactH2'));
     h=replFirst(h,'<p class="lead reveal d2" style="margin-bottom:34px">',o('f-contactLead'),'</p>',g('f-contactLead'));
-    // Medios ed1
-    h=replFirst(h,'<span class="eyebrow reveal">'+o('f-ed1label'),o('f-ed1label').slice(0,-3)||'</span>',
-      '' /* won't work cleanly */);
-    // Ed1 label: find first eyebrow in medios section
-    {const ms=h.indexOf('<section class="section section--dark" id="medios">');
-     if(ms>=0){const sub=h.slice(ms);const nb=replFirst(sub,'<span class="eyebrow reveal">',o('f-ed1label'),'</span>',g('f-ed1label'));h=h.slice(0,ms)+nb;}
+    // Radio
+    h=replFirst(h,'<div class="radio__card-label">',o('f-radioCardLabel'),'</div>',g('f-radioCardLabel'));
+    h=replUniq(h,'h3','',''+o('f-radioCardH3'),''+g('f-radioCardH3'));// basic
+    // radio stats
+    [1,2,3].forEach(i=>{
+      if(o('f-rs'+i+'b')&&g('f-rs'+i+'b')!==o('f-rs'+i+'b'))h=replAll(h,'<b>'+o('f-rs'+i+'b')+'</b>','<b>'+g('f-rs'+i+'b')+'</b>');
+      if(o('f-rs'+i+'s')&&g('f-rs'+i+'s')!==o('f-rs'+i+'s'))h=replAll(h,'<span>'+o('f-rs'+i+'s')+'</span>','<span>'+g('f-rs'+i+'s')+'</span>');
+    });
+    // schedule rows
+    for(let i=1;i<=5;i++){
+      if(o('f-rd'+i+'d')&&g('f-rd'+i+'d')!==o('f-rd'+i+'d'))h=replAll(h,'<span class="day">'+o('f-rd'+i+'d')+'</span>','<span class="day">'+g('f-rd'+i+'d')+'</span>');
+      if(o('f-rd'+i+'t')&&g('f-rd'+i+'t')!==o('f-rd'+i+'t'))h=replAll(h,'<span class="time">'+o('f-rd'+i+'t')+'</span>','<span class="time">'+g('f-rd'+i+'t')+'</span>');
     }
-    h=replFirst(h,'<h3 class="medios__ed-title reveal d1">'+o('f-ed1title'),'</h3>',
-      '' /* partial */);
+    // Medios
+    {const ms=h.indexOf('<section class="section section--dark" id="medios">');
+     if(ms>=0){let sub=h.slice(ms);sub=replFirst(sub,'<span class="eyebrow reveal">',o('f-ed1label'),'</span>',g('f-ed1label'));h=h.slice(0,ms)+sub;}}
     h=replUniq(h,'h3','medios__ed-title reveal d1',o('f-ed1title'),g('f-ed1title'));
     if(o('f-ed1link')&&g('f-ed1link')!==o('f-ed1link'))h=replAll(h,o('f-ed1link'),g('f-ed1link'));
-    // Ed2 label: second eyebrow reveal in medios
     {const ms=h.indexOf('<section class="section section--dark" id="medios">');
-     if(ms>=0){let sub=h.slice(ms);const fi=sub.indexOf('<span class="eyebrow reveal">');
-      if(fi>=0){const si=sub.indexOf('<span class="eyebrow reveal">',fi+1);
-       if(si>=0){const before=sub.slice(0,si);const after_si=sub.slice(si);
-        const newafter=replFirst(after_si,'<span class="eyebrow reveal">',o('f-ed2label'),'</span>',g('f-ed2label'));
-        sub=before+newafter;h=h.slice(0,ms)+sub;}}}}
+     if(ms>=0){let sub=h.slice(ms);const fi=sub.indexOf('<span class="eyebrow reveal">');const si=sub.indexOf('<span class="eyebrow reveal">',fi+1);
+      if(si>=0){const before=sub.slice(0,si);const after=sub.slice(si);sub=before+replFirst(after,'<span class="eyebrow reveal">',o('f-ed2label'),'</span>',g('f-ed2label'));h=h.slice(0,ms)+sub;}}}
     h=replUniq(h,'h3','medios__ed-title reveal d1',o('f-ed2title'),g('f-ed2title'));
     if(o('f-ed2link')&&g('f-ed2link')!==o('f-ed2link'))h=replAll(h,o('f-ed2link'),g('f-ed2link'));
-    // YouTube
     if(g('f-ytId')&&g('f-ytId')!==o('f-ytId')){h=replAll(h,'embed/'+o('f-ytId'),'embed/'+g('f-ytId'));h=replAll(h,'watch?v='+o('f-ytId'),'watch?v='+g('f-ytId'));}
     h=replFirst(h,'<h3>',o('f-ytTitle'),'</h3>',g('f-ytTitle'));
     h=replFirst(h,'</h3>\n        <p>',o('f-ytDesc'),'</p>',g('f-ytDesc'));
-    // Phone + Socials
     if(g('f-phone')&&g('f-phone')!==o('f-phone'))h=replAll(h,o('f-phone'),g('f-phone'));
     if(g('f-ig')&&g('f-ig')!==o('f-ig'))h=replAll(h,o('f-ig'),g('f-ig'));
     if(g('f-fb')&&g('f-fb')!==o('f-fb'))h=replAll(h,o('f-fb'),g('f-fb'));
     if(g('f-li')&&g('f-li')!==o('f-li'))h=replAll(h,o('f-li'),g('f-li'));
     if(g('f-yt')&&g('f-yt')!==o('f-yt'))h=replAll(h,o('f-yt'),g('f-yt'));
 
-    await api({action:'save-html',sha,html:h});
-    const fresh=await api({action:'get'});html=fresh.html;sha=fresh.sha;
+    await saveHtmlToGithub(h);
     orig={};document.querySelectorAll('[id^="f-"]').forEach(el=>{orig[el.id]=el.value;});
     toast('✅ Guardado. El sitio se actualiza en ~2 minutos.');
-  }catch(e){toast('❌ '+(e.message||'Error al guardar'),'err');}
+  }catch(e){toast('❌ '+(e.message||'Error'),'err');}
   finally{btn.disabled=false;btn.textContent='💾 Guardar cambios';}
 }
 
+// ── SAVE IMAGES ──────────────────────────────────────────────────────────────
 async function saveImages(){
   const slots=[
     {fileId:'file-hero', filename:'vanessa-hero_upscaled.webp'},
@@ -597,9 +828,8 @@ async function saveImages(){
     catch(e){toast('❌ '+e.message,'err');}
   }
   if(ok)toast('✅ '+ok+' imagen(es) guardada(s). Visible en ~2 min.');
-  btn.disabled=false;btn.textContent='💾 Guardar imágenes seleccionadas';
+  btn.disabled=false;btn.textContent='💾 Guardar imágenes';
 }
-
 function toB64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>res(e.target.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(file);});}
 
 document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
