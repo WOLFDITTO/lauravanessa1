@@ -470,11 +470,9 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.08;letter-spacin
 
 /* ============ AMPI ============ */
 .ampi__grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:clamp(40px,6vw,84px);align-items:center}
-.ampi__visual{border-radius:4px;overflow:hidden;border:1px solid var(--line-light);box-shadow:0 40px 80px -36px rgba(0,0,0,.18)}
-.ampi__visual img{width:100%;display:block}
+.ampi__visual{border-radius:4px;border:1px solid var(--line-light);display:flex;align-items:center;justify-content:center;padding:clamp(40px,7vw,80px);background:var(--cream-2);min-height:320px}
+.ampi__visual img{width:100%;max-width:340px;display:block}
 .ampi__body p{margin-top:18px;color:var(--txt-soft);font-size:1.04rem}
-.ampi__logo{margin-top:34px;padding-top:28px;border-top:1px solid var(--line-light)}
-.ampi__logo img{height:68px;width:auto;display:block}
 @media(max-width:860px){.ampi__grid{grid-template-columns:1fr}}
 
 /* ============ RADIO ============ */
@@ -808,16 +806,13 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.08;letter-spacin
   <div class="container">
     <div class="ampi__grid">
       <div class="ampi__visual reveal">
-        <img src="AMPI_Mesa%20de%20trabajo%201%20copia%202.png" alt="Reconocimiento AMPI Cancún — Vanessa Legorreta, Asociada">
+        <img src="AMPI%20CANCUN-01.png" alt="AMPI Cancún — Asociación Mexicana de Profesionales Inmobiliarios">
       </div>
       <div>
         <span class="eyebrow reveal">Nombramiento</span>
         <h2 class="h2 reveal d1">Asociada · AMPI Cancún</h2>
         <p class="reveal d2">Vanessa Legorreta es Asociada de AMPI — la Asociación Mexicana de Profesionales Inmobiliarios, el organismo más representativo del sector inmobiliario en México desde 1956.</p>
         <p class="reveal d3">Este nombramiento reconoce su trayectoria, su formación certificada y su compromiso con la ética, la transparencia y los más altos estándares del mercado inmobiliario nacional.</p>
-        <div class="ampi__logo reveal d3">
-          <img src="AMPI%20CANCUN-01.png" alt="AMPI Cancún">
-        </div>
       </div>
     </div>
   </div>
